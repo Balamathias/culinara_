@@ -17,6 +17,10 @@ export interface Tag {
   updated_at?: string | null,
 }
 
+export interface Like {
+  id: string | number
+  username: string
+}
 export interface Post {
   id: string,
   title: string,
@@ -29,6 +33,16 @@ export interface Post {
   video: string | null,
   short_description: string | null,
   likes_count: number,
+  likes: string[]
+}
+
+export interface InsertPost {
+  title: string,
+  content: string,
+  thumbnail: string | null,
+  video?: string | null,
+  tags?: string[],
+  short_description?: string | null,
 }
 
 export interface PaginatedPosts {
@@ -36,4 +50,9 @@ export interface PaginatedPosts {
   next: string | null,
   previous: string | null,
   results: Post[],
+}
+
+export interface TrendingPosts {
+  message: string,
+  data: Post[]
 }

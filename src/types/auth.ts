@@ -8,5 +8,22 @@ export interface RegisterResponse {
     user: User;
     access_token: string;
     refresh_token: string;
-  };
+  } | null;
+  errors?: Record<string, unknown>
+}
+
+export interface BadRegisterResponse {
+  status: string;
+  message: string;
+  code: number;
+  data: null,
+}
+
+export interface LoginResponse {
+  access: string;
+  refresh: string;
+}
+
+export interface RefreshResponse {
+  access: string;
 }

@@ -3,6 +3,7 @@ import localFont from "next/font/local";
 import "./globals.css";
 import { cn } from '@/lib/utils'
 import { Inter } from 'next/font/google'
+import Provider from "@/components/provider";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -14,6 +15,13 @@ const geistMono = localFont({
   variable: "--font-geist-mono",
   weight: "100 900",
 });
+
+const reditSans = localFont({
+  src: "./fonts/static/RedditSansCondensed-Regular.ttf",
+  variable: "--font-redit",
+  weight: "100 300 400 500 600 900",
+});
+
 
 const inter = Inter({
   variable: "--font-inter",
@@ -34,9 +42,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={cn(`${geistSans.variable} ${geistMono.variable} antialiased bg-background font-inter`, inter.className)}
+        className={cn(`${geistSans.variable} ${geistMono.variable} w-full antialiased bg-background font-redit`, inter.className, reditSans.className)}
       >
-        {children}
+        <Provider>
+          {children}
+        </Provider>
       </body>
     </html>
   );
