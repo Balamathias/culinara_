@@ -4,6 +4,10 @@ import "./globals.css";
 import { cn } from '@/lib/utils'
 import { Inter } from 'next/font/google'
 import Provider from "@/components/provider";
+import { NextSSRPlugin } from "@uploadthing/react/next-ssr-plugin";
+import { extractRouterConfig } from "uploadthing/server";
+import { CulinaraRouter } from "./api/uploadthing/core";
+
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -45,6 +49,15 @@ export default function RootLayout({
         className={cn(`${geistSans.variable} ${geistMono.variable} w-full antialiased bg-background font-redit`, inter.className, reditSans.className)}
       >
         <Provider>
+          <NextSSRPlugin
+            /**
+             * The `extractRouterConfig` will extract **only** the route configs
+             * from the router to prevent additional information from being
+             * leaked to the client. The data passed to the client is the same
+             * as if you were to fetch `/api/uploadthing` directly.
+             */
+            routerConfig={extractRouterConfig(CulinaraRouter)}
+          />
           {children}
         </Provider>
       </body>

@@ -17,7 +17,7 @@ const Posts = async () => {
           <Card key={post?.id} className="rounded-xl w-full md:max-w-[500px] md:basis-2/3 flex flex-col gap-y-3 bg-background border-none shadow-none">
             <PostAuthor author={post.author} />
             <Image
-              src={post.thumbnail!}
+              src={post?.thumbnail?.image ?? ''}
               alt={post.title}
               width={1000}
               height={1000}

@@ -14,7 +14,7 @@ const Trending = async () => {
           posts?.data && posts?.data?.map(post => (
             <div key={post.id} className='flex flex-row items-center gap-x-2 cursor-pointer h-32'>
               <Image 
-                src={post.thumbnail!}
+                src={post?.thumbnail?.image ?? ''}
                 width={400}
                 height={400}
                 alt={post?.title}

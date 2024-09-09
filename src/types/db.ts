@@ -10,6 +10,8 @@ export interface User {
   avatar: string | null,
 }
 
+export interface Thumbnail { image?: string | null, images?: string[] | null }
+
 export interface Tag {
   id: string | number,
   name: string,
@@ -28,7 +30,7 @@ export interface Post {
   created_at: string,
   updated_at: string | null,
   author: User,
-  thumbnail: string | null,
+  thumbnail: Thumbnail | null,
   tags: Tag[],
   video: string | null,
   short_description: string | null,
@@ -39,7 +41,7 @@ export interface Post {
 export interface InsertPost {
   title: string,
   content: string,
-  thumbnail: string | null,
+  thumbnail: Thumbnail | null,
   video?: string | null,
   tags?: string[],
   short_description?: string | null,

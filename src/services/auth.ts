@@ -48,7 +48,7 @@ export async function login(email: string, password: string) {
 
 export async function logout() {
   try {
-    const { data, status } = await serverClient.post("/auth/logout/", { refresh: cookies().get("refreshToken") })
+    const { data, status } = await serverClient.post("/auth/logout/", { refresh: cookies().get("refreshToken")?.value })
 
     if (status === STATUS.HTTP_205_RESET_CONTENT) {
       cookies().delete("token")
@@ -65,7 +65,7 @@ export async function logout() {
 export async function refreshToken() {
 
   try {
-    const { data } = await serverClient.post("/auth/refresh/", { refresh: cookies().get("refreshToken") })
+    const { data } = await serverClient.post("/auth/refresh/", { refresh: cookies().get("refreshToken")?.value })
     cookies().set("token", data?.access)
 
     return data as RefreshResponse
