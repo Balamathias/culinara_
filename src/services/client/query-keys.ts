@@ -5,5 +5,7 @@ export enum QUERY_KEYS {
   get_infinite_posts = 'get_infinite_posts',
   update_user = 'update_user',
   get_infinite_favorite_posts = 'get_infinite_favorite_posts',
-  get_infinite_posts_by_tag = 'get_infinite_posts_by_tag'
+  get_infinite_posts_by_tag = 'get_infinite_posts_by_tag',
+  get_search = 'get_search',
+  get_infinite_search = 'get_infinite_search'
 }

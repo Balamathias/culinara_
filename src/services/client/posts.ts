@@ -1,6 +1,6 @@
-import { useMutation, QueryClient, useInfiniteQuery } from "@tanstack/react-query";
+import { useMutation, QueryClient, useInfiniteQuery, useQuery } from "@tanstack/react-query";
 import { QUERY_KEYS } from "./query-keys";
-import { createPost, filterPostsByTag, getFavoriteRecipes, getPosts, likePost } from "../posts";
+import { createPost, filterPostsByTag, getFavoriteRecipes, getPosts, likePost, searchPosts } from "../posts";
 import { InsertPost } from "@/types/db";
 
 const queryClient = new QueryClient()
@@ -82,3 +82,28 @@ export const useInfiniteFavoritePosts = () => useInfiniteQuery({
   },
 })
 
+export const useSearch = (q: string) => useQuery({
+  queryFn: () => searchPosts(q),
+  queryKey: [QUERY_KEYS.get_search, q]
+})
+
+// @ts-ignore
+export const useInfiniteSearch = (q: string) => useInfiniteQuery({
+  queryKey: [QUERY_KEYS.get_infinite_search],
+  queryFn: async ({ pageParam = 1 }: { pageParam: number }) => {
+    const posts = await searchPosts(q, pageParam)
+    return posts!
+  },
+  getNextPageParam: (lastPage) => {
+    if (lastPage?.next) {
+      const url = new URL(lastPage.next);
+      const nextPage = url.searchParams.get("page");
+      return nextPage ? parseInt(nextPage) : undefined;
+    }
+    return undefined
+  },
+  initialData: {
+    pages: [],
+    pageParams: [],
+  },
+})
