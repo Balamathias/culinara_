@@ -18,7 +18,7 @@ const Layout = async ({ children }: PropsWithChildren) => {
   return (
     <div className='flex overflow-hidden'>
       <Sidebar />
-      <main className='overflow-y-auto min-h-screen md:ml-20 xl:ml-64 flex w-full flex-col items-center p-4 py-6'>
+      <main className='overflow-y-auto min-h-screen md:ml-20 xl:ml-64 flex w-full flex-col items-center p-4 py-6 pb-24'>
         {children}
       </main>
       <BottomBar />

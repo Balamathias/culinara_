@@ -22,6 +22,8 @@ import { Textarea } from '../ui/textarea'
 import { useCreatePost } from '@/services/client/posts'
 
 import { useRouter } from 'next/navigation'
+import { useQueryClient } from '@tanstack/react-query'
+import { QUERY_KEYS } from '@/services/client/query-keys'
 
 interface FormProps {
   imageURL: string,
@@ -31,6 +33,7 @@ interface FormProps {
 const CreateForm = ({imageURL, closeModal}: FormProps) => {
   const { mutate: createPost, isPending } = useCreatePost()
   const router = useRouter()
+  const queryClient = useQueryClient()
 
   const form = useForm<z.infer<typeof InsertPostSchema>>({
     resolver: zodResolver(InsertPostSchema),
@@ -53,6 +56,7 @@ const CreateForm = ({imageURL, closeModal}: FormProps) => {
         form.reset()
         toast.success('Your post has been created successfully.')
         closeModal?.()
+        queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.get_infinite_posts] })
         router.refresh()
       },
       onError: err => {

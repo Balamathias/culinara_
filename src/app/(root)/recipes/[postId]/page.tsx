@@ -12,14 +12,14 @@ const Page = async ({ params }: { params: { postId: string }}) => {
   }
 
   return (
-    <div className="flex md:p-8 py-6 mx-auto gap-y-3 max-w-7xl w-full gap-x-10">
+    <div className="flex md:p-8 py-6 mx-auto gap-y-5 flex-col md:flex-row max-w-7xl w-full gap-x-10">
       <div className="flex flex-col gap-y-4 md:basis-[60%]">
         <Suspense>
           <Post post={post} user={user!} />
         </Suspense>
       </div>
 
-      <div className="flex-col gap-y-5 md:basis-[40%] hidden md:flex py-6">
+      <div className="flex-col gap-y-5 md:basis-[40%] md:flex py-6">
         
         <div className="flex flex-col gap-y-4">
           <h2 className="text-2xl font-semibold text-muted-foreground">Short description</h2>
