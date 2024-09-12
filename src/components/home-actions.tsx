@@ -7,7 +7,7 @@ interface HomeActionsProps {
   user: User | null
 }
 
-const HomeActions = ({ user }: HomeActionsProps) => {
+const HomeActions = async ({ user }: HomeActionsProps) => {
   return (
     <div className='md:flex flex-col gap-y-4 hidden basis-1/3'>
       <div className='flex items-center gap-x-2.5'>

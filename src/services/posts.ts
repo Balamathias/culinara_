@@ -82,7 +82,7 @@ export const filterPostsByTag = async (tag: string, page=1) => {
 
 export const searchPosts = async (query: string, page=1) => {
   try {
-    const { data } = await serverClient.get(`/posts/search/`, { params: { query, page } })
+    const { data } = await serverClient.get(`/posts/search/`, { params: { q: query, page } })
     return data as PaginatedPosts
   } catch (error) {
     console.error(error)

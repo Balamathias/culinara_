@@ -1,5 +1,6 @@
 import HomeActions from "@/components/home-actions";
 import Posts from "@/components/posts";
+import HomeActionsSkeleton from "@/components/skeletons/home-actions";
 import PostsSkeleton from "@/components/skeletons/posts";
 import { getUser } from "@/services/auth";
 import { Metadata } from "next";
@@ -17,7 +18,9 @@ export default async function Home() {
         <Posts user={user!} />
       </Suspense>
 
-      <HomeActions user={user} />
+      <Suspense fallback={<HomeActionsSkeleton />}>
+        <HomeActions user={user} />
+      </Suspense>
     </div>
   );
 }
