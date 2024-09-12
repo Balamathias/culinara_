@@ -11,6 +11,10 @@ const Layout = async ({ children }: PropsWithChildren) => {
     return redirect('/login')
   }
 
+  if (!user?.first_name || !user?.last_name) {
+    return redirect('/profile-complete')
+  }
+
   return (
     <div className='flex overflow-hidden'>
       <Sidebar />
