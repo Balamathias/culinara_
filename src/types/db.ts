@@ -31,7 +31,7 @@ export interface Post {
   updated_at: string | null,
   author: User,
   thumbnail: Thumbnail | null,
-  tags: Tag[],
+  tags: string[],
   video: string | null,
   short_description: string | null,
   likes_count: number,
@@ -57,4 +57,10 @@ export interface PaginatedPosts {
 export interface TrendingPosts {
   message: string,
   data: Post[]
+}
+
+export interface PartialUserUpdate {
+  first_name: string,
+  last_name: string,
+  avatar: string,
 }

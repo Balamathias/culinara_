@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import localFont from "next/font/local";
+// import localFont from "next/font/local";
 import "./globals.css";
 import { cn } from '@/lib/utils'
 import { Inter } from 'next/font/google'
@@ -9,22 +9,11 @@ import { extractRouterConfig } from "uploadthing/server";
 import { CulinaraRouter } from "./api/uploadthing/core";
 
 
-const geistSans = localFont({
-  src: "./fonts/GeistVF.woff",
-  variable: "--font-geist-sans",
-  weight: "100 900",
-});
-const geistMono = localFont({
-  src: "./fonts/GeistMonoVF.woff",
-  variable: "--font-geist-mono",
-  weight: "100 900",
-});
-
-const reditSans = localFont({
-  src: "./fonts/static/RedditSansCondensed-Regular.ttf",
-  variable: "--font-redit",
-  weight: "100 300 400 500 600 900",
-});
+// const reditSans = localFont({
+//   src: "./fonts/static/RedditSansCondensed-Regular.ttf",
+//   variable: "--font-redit",
+//   weight: "100 300 400 500 600 900",
+// });
 
 
 const inter = Inter({
@@ -46,7 +35,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={cn(`${geistSans.variable} ${geistMono.variable} w-full antialiased bg-background font-redit`, inter.className, reditSans.className)}
+        className={cn(`w-full antialiased bg-background font-inter`, inter.className)}
       >
         <Provider>
           <NextSSRPlugin

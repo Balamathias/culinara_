@@ -1,3 +1,4 @@
+import BottomBar from '@/components/bottom-bar'
 import Sidebar from '@/components/sidebar'
 import { getUser } from '@/services/auth'
 import { redirect } from 'next/navigation'
@@ -16,6 +17,7 @@ const Layout = async ({ children }: PropsWithChildren) => {
       <main className='overflow-y-auto min-h-screen md:ml-20 xl:ml-64 flex w-full flex-col items-center p-4 py-6'>
         {children}
       </main>
+      <BottomBar />
     </div>
   )
 }

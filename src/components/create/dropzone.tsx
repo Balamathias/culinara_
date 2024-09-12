@@ -3,26 +3,27 @@
 import { UploadDropzone } from "@/lib/uploadthing";
 import { toast } from "sonner";
 
+interface DropzoneProps {
+  onUploadFinish: (url: string | undefined) => void,
+  endpoint?: 'profile'
+}
 
-const Dropzone = () => (
+const Dropzone = ({onUploadFinish, endpoint}: DropzoneProps) => (
   <UploadDropzone
-    endpoint="upload"
+    endpoint={endpoint ?? "upload"}
     onClientUploadComplete={(res) => {
-      // Do something with the response
-      console.log("Files: ", res);
-      toast.success("Upload Completed");
+      onUploadFinish(res.at(0)?.url)
     }}
     onUploadError={(error: Error) => {
-      toast.error(`ERROR! ${error.message}`);
+      console.error(`ERROR! ${error.message}`);
+      toast.error('An error occured, please try again.')
     }}
-    onUploadBegin={(name) => {
-      // Do something once upload begins
-      toast.loading("uploading: " + name);
+    onUploadBegin={() => {
     }}
     onChange={(acceptedFiles) => {
-      // Do something with the accepted files
       console.log("Accepted files: ", acceptedFiles);
     }}
+    onUploadProgress={(p) => {console.log(p)}}
     className=""
     appearance={{
       button: {

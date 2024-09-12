@@ -21,6 +21,7 @@ import { Card } from '../ui/card'
 import { useLogin } from '@/services/client/auth'
 import { toast } from 'sonner'
 import { useRouter } from 'next/navigation'
+import Link from 'next/link'
 
 const Login = () => {
 
@@ -43,7 +44,7 @@ const Login = () => {
           localStorage.setItem('token', data?.access as string)
           localStorage.setItem('refreshToken', data?.refresh as string)
           form.reset()
-          toast.success('Logged In created successfully, You will be redirected in a bit.')
+          toast.success('Logged In successfully, You will be redirected in a bit.')
           router.replace('/')
         }
       },
@@ -54,11 +55,11 @@ const Login = () => {
   }
 
   return (
-    <Card className='flex flex-col gap-y-4 rounded-xl p-4 py-5 w-full bg-secondary'>
-      <h2 className='text-2xl font-bold'>Log In</h2>
-      <p className='text-muted-foreground'>Welcome back, please log in.</p>
+    <Card className='flex flex-col gap-y-4 rounded-xl p-4 py-5 w-full bg-secondary/95 md:bg-inherit min-w-max md:w-[440px] border-none shadow-none drop-shadow-none'>
+      <h2 className='text-3xl font-bold'>Culinara Login</h2>
+      <p className='text-muted-foreground'>Welcome back to Culinara, please log in.</p>
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 w-full min-w-max md:w-[440px]">
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 w-full ">
           <FormField
             control={form.control}
             name="email"
@@ -89,6 +90,10 @@ const Login = () => {
           <Button size={'lg'} className='w-full' type="submit">{isPending ? 'Processing...': 'Login'}</Button>
         </form>
       </Form>
+
+      <div className='flex flex-col gap-y-2 mt-3'>
+        <p className='text-muted-foreground'>{"Don't"} have an account? <Link href={'/register'} className='text-primary'>Register.</Link></p>
+      </div>
     </Card>
   )
 }

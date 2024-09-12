@@ -21,6 +21,7 @@ import { Card } from '../ui/card'
 import { useRegister } from '@/services/client/auth'
 import { toast } from 'sonner'
 import { useRouter } from 'next/navigation'
+import Link from 'next/link'
 
 const Register = () => {
 
@@ -45,7 +46,7 @@ const Register = () => {
           localStorage.setItem('refreshToken', data?.data?.refresh_token as string)
           form.reset()
           toast.success('Account created successfully, You will be redirected in a bit.')
-          router.replace('/')
+          router.replace('/profile-complete')
         }
       },
       onError: (err) => {
@@ -55,11 +56,11 @@ const Register = () => {
   }
 
   return (
-    <Card className='flex flex-col gap-y-4 rounded-xl p-4 py-5 w-full'>
-      <h2 className='text-2xl font-bold'>Register</h2>
-      <p className='text-muted-foreground'>Create an account to get started</p>
+    <Card className='flex flex-col gap-y-4 rounded-xl p-4 py-5 w-full bg-secondary/90 md:bg-inherit min-w-max md:w-[440px] border-none shadow-none drop-shadow-none'>
+      <h2 className='text-2xl font-bold'>Culinara Register</h2>
+      <p className='text-muted-foreground'>Create an account to get started with Culinara</p>
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 w-full min-w-max md:w-[440px]">
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 w-full">
           <FormField
             control={form.control}
             name="email"
@@ -102,6 +103,10 @@ const Register = () => {
           <Button size={'lg'} className='w-full' type="submit">{isPending ? 'Processing...': 'Register'}</Button>
         </form>
       </Form>
+
+      <div className='flex flex-col gap-y-2 mt-3'>
+        <p className='text-muted-foreground'>Already have an account? <Link href={'/login'} className='text-primary'>Login.</Link></p>
+      </div>
     </Card>
   )
 }

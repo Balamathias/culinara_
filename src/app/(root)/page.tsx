@@ -14,7 +14,7 @@ export default async function Home() {
   return (
     <div className="flex md:p-8 py-6 mx-auto max-w-7xl w-full justify-between">
       <Suspense fallback={<PostsSkeleton />}>
-        <Posts />
+        <Posts user={user!} />
       </Suspense>
 
       <HomeActions user={user} />

@@ -1,18 +1,18 @@
 'use client'
 
 import React from 'react'
-import Post from './post';
-import { useInfinitePosts } from '@/services/client/posts';
+import { useInfiniteFavoritePosts } from '@/services/client/posts';
 import { User } from '@/types/db';
-import useInfiniteScroll from './hooks/use-infinite-scroll';
-import PostsSkeleton from './skeletons/posts';
 import { Loader2 } from 'lucide-react';
+import useInfiniteScroll from '../hooks/use-infinite-scroll';
+import PostsSkeleton from '../skeletons/posts';
+import Post from '../post';
 
 interface Props {
   user: User
 }
 
-const Posts = ({ user }: Props) => {
+const Favorites = ({ user }: Props) => {
   const {
     data,
     fetchNextPage,
@@ -20,7 +20,7 @@ const Posts = ({ user }: Props) => {
     isFetchingNextPage,
     isPending,
     error
-  } = useInfinitePosts()
+  } = useInfiniteFavoritePosts()
 
   useInfiniteScroll({ fetchNextPage, hasNextPage })
 
@@ -50,4 +50,4 @@ const Posts = ({ user }: Props) => {
   )
 }
 
-export default Posts
+export default Favorites

@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState } from 'react'
+import React from 'react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
@@ -16,19 +16,21 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-// import { useLogin } from '@/services/client/auth'
-// import { toast } from 'sonner'
-// import { useRouter } from 'next/navigation'
-import Dropzone from './dropzone';
+import { toast } from 'sonner'
 import { InsertPostSchema } from '@/lib/schema/post'
 import { Textarea } from '../ui/textarea'
-import { Label } from '../ui/label'
+import { useCreatePost } from '@/services/client/posts'
 
-const Create = () => {
-  // const { mutate: login, isPending } = useLogin()
-  // const router = useRouter()
+import { useRouter } from 'next/navigation'
 
-  const [files, setFiles] = useState<File[]>([])
+interface FormProps {
+  imageURL: string,
+  closeModal?: () => void
+}
+
+const CreateForm = ({imageURL, closeModal}: FormProps) => {
+  const { mutate: createPost, isPending } = useCreatePost()
+  const router = useRouter()
 
   const form = useForm<z.infer<typeof InsertPostSchema>>({
     resolver: zodResolver(InsertPostSchema),
@@ -41,16 +43,27 @@ const Create = () => {
   })
  
   function onSubmit(values: z.infer<typeof InsertPostSchema>) {
-    console.log(values)
+    const data = {
+      ...values, 
+      tags: values?.tags?.split(',').map(every => every.trim().toLowerCase()), 
+      thumbnail: { image: imageURL }
+    }
+    createPost(data, {
+      onSuccess: () => {
+        form.reset()
+        toast.success('Your post has been created successfully.')
+        closeModal?.()
+        router.refresh()
+      },
+      onError: err => {
+        toast.error(err?.message)
+      }
+    })
     
   }
 
   return (
     <div className='flex flex-col gap-y-3'>
-        <div className=''>
-          <Label htmlFor='file'>Upload Image/Video (max 16MB)</Label>
-          <Input type='file' onChange={(e) => setFiles(e.target.files)} />
-        </div>
         <div>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 w-full min-w-max md:w-[440px]">
@@ -95,7 +108,21 @@ const Create = () => {
                 </FormItem>
               )}
             />
-            <Button size={'lg'} className='w-full' type="submit">{isPending ? 'Processing...': 'Create'}</Button>
+
+            <FormField
+              control={form.control}
+              name="tags"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Tags</FormLabel>
+                  <FormControl>
+                    <Input placeholder="african, dish, strawberry (Separate tags with commas...)" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <Button size={'lg'} className='w-full' type="submit">{isPending ? 'Processing...': 'Finish up'}</Button>
           </form>
         </Form>
         </div>
@@ -103,4 +130,4 @@ const Create = () => {
   )
 }
 
-export default Create
+export default CreateForm

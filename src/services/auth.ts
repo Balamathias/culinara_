@@ -3,7 +3,7 @@
 
 import serverClient from "@/lib/server"
 import { LoginResponse, RefreshResponse, RegisterResponse } from "@/types/auth"
-import { User } from "@/types/db"
+import { PartialUserUpdate, User } from "@/types/db"
 import { cookies } from "next/headers"
 import { status as STATUS } from "@/lib/utils"
 
@@ -37,7 +37,7 @@ export async function login(email: string, password: string) {
     }
 
     else {
-      throw new Error("An unknown error has occurred.")
+      throw new Error("An unknown error has occurred, please try again.")
     }
 
   } catch (error: any) {
@@ -58,7 +58,7 @@ export async function logout() {
 
   } catch (error: any) {
     console.error(error)
-    return null
+    throw new Error('Sorry, an unknown error has occured, Please try again.')
   }
 }
 
@@ -88,16 +88,18 @@ export async function register({email, password, username}: { email: string; pas
 
       return res
     }
-
+    
     else if (status === STATUS.HTTP_400_BAD_REQUEST && res?.errors) {
       if (res?.errors?.email) {
-        throw new Error(res?.errors?.email as string)
+        throw new Error(res?.errors?.email?.join(',') as string)
       }
-      if (res?.errors?.username) {
-        throw new Error(res?.errors?.username as string)
+      else if (res?.errors?.username) {
+        throw new Error(res?.errors?.username?.join(',') as string)
       }
-      if (res?.errors?.password) {
-        throw new Error(res?.errors?.password as string)
+      else if (res?.errors?.password) {
+        throw new Error(res?.errors?.password?.join(',') as string)
+      } else {
+        throw new Error("An unknown error has occurred.")
       }
     }
 
@@ -111,6 +113,16 @@ export async function register({email, password, username}: { email: string; pas
 
   } catch (error: any) {
     console.error(error)
-    return null
+    throw new Error("An unknown error has occurred. Please ensure the details you entered are correct.")
   }
+}
+
+export async function updateUser(input: PartialUserUpdate) {
+  const { data, status } = await serverClient.put(`/auth/update-user/`, input)
+
+  if (data) {
+    return data as User
+  }
+
+  else return { status, data: null }
 }

@@ -63,7 +63,7 @@ export const links = [
   {
     label: 'Create',
     Icon: PlusCircle,
-    href: '/create',
+    href: '#',
   },
   {
     label: 'Favorites',
@@ -73,7 +73,8 @@ export const links = [
   {
     label: 'Search',
     Icon: Search,
-    href: '/search'
+    href: '#',
+    temp_href: '/search',
   },
   {
     label: 'Explore',
@@ -87,7 +88,76 @@ export const links = [
   },
 ]
 
+export const mobileLinks = [
+  {
+    label: 'Home',
+    Icon: Home,
+    href: '/',
+  },
+  {
+    label: 'Create',
+    Icon: PlusCircle,
+    href: '#',
+  },
+  {
+    label: 'Favorites',
+    Icon: Heart,
+    href: '/favorites'
+  },
+  {
+    label: 'Search',
+    Icon: Search,
+    href: '#',
+    temp_href: '/search',
+  },
+  {
+    label: 'Profile',
+    Icon: UserCircle,
+    href: '/profile'
+  },
+]
+
 export const clipString = (text: string, by=50) => {
   if (text.length <= by) return text
   else return text.slice(0, by) + '...'
+}
+
+export function formatDate(dateString: string): string {
+  const date = new Date(dateString)
+
+  const day = String(date.getDate()).padStart(2, '0');
+  const month = String(date.getMonth() + 1).padStart(2, '0')
+  const year = date.getFullYear()
+
+  let hours = date.getHours()
+  const minutes = String(date.getMinutes()).padStart(2, '0')
+
+  const ampm = hours >= 12 ? 'pm' : 'am'
+  hours = hours % 12 || 12
+
+  const formattedHours = String(hours).padStart(2, '0')
+
+  return `${day}/${month}/${year} ${formattedHours}:${minutes} ${ampm}`
+}
+
+export function timeAgo(dateString: string): string {
+  const now = new Date();
+  const pastDate = new Date(dateString);
+
+  const diffInSeconds = Math.floor((now.getTime() - pastDate.getTime()) / 1000);
+
+  const seconds = diffInSeconds;
+  const minutes = Math.floor(seconds / 60);
+  const hours = Math.floor(minutes / 60);
+  const days = Math.floor(hours / 24);
+
+  if (seconds < 60) {
+    return `${seconds}s.`;
+  } else if (minutes < 60) {
+    return `${minutes}m.`;
+  } else if (hours < 24) {
+    return `${hours}h.`;
+  } else {
+    return `${days}d.`;
+  }
 }
