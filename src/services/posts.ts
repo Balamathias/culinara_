@@ -80,6 +80,15 @@ export const filterPostsByTag = async (tag: string, page=1) => {
   }
 }
 
+export const explorePosts = async (tab="all", page=1) => {
+  try {
+    const { data } = await serverClient.get(`/posts/explore/`, { params: { tab, page } })
+    return data as PaginatedPosts
+  } catch (error) {
+    console.error(error)
+  }
+}
+
 export const searchPosts = async (query: string, page=1) => {
   try {
     const { data } = await serverClient.get(`/posts/search/`, { params: { q: query, page } })

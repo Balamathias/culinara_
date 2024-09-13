@@ -25,7 +25,7 @@ export async function login(email: string, password: string) {
     if (status === STATUS.HTTP_200_SUCCESSFUL) {
       cookies().set("token", response.access)
       cookies().set("refreshToken", response.refresh)
-      return response
+      return {data: response}
     }
       
     else if (status === STATUS.HTTP_401_UNAUTHORIZED) {
@@ -41,8 +41,9 @@ export async function login(email: string, password: string) {
     }
 
   } catch (error: any) {
-    console.error(error)
-    return null
+    console.error(error?.status)
+    console.error(error?.response?.data)
+    return { status: error?.status, errors: error?.response?.data, data: null }
   }
 }
 
@@ -82,25 +83,11 @@ export async function register({email, password, username}: { email: string; pas
     
     const res = data as RegisterResponse
 
-    if (status === STATUS.HTTP_201_CREATED) {
+    if (status === STATUS.HTTP_201_CREATED || status === STATUS.HTTP_200_SUCCESSFUL) {
       cookies().set("token", res.data?.access_token as string)
       cookies().set("refreshToken", res.data?.refresh_token as string)
 
       return res
-    }
-    
-    else if (status === STATUS.HTTP_400_BAD_REQUEST && res?.errors) {
-      if (res?.errors?.email) {
-        throw new Error(res?.errors?.email?.join(',') as string)
-      }
-      else if (res?.errors?.username) {
-        throw new Error(res?.errors?.username?.join(',') as string)
-      }
-      else if (res?.errors?.password) {
-        throw new Error(res?.errors?.password?.join(',') as string)
-      } else {
-        throw new Error("An unknown error has occurred.")
-      }
     }
 
     else if (status === STATUS.HTTP_500_INTERNAL_SERVER_ERROR) {
@@ -125,4 +112,17 @@ export async function updateUser(input: PartialUserUpdate) {
   }
 
   else return { status, data: null }
+}
+
+export async function followUnfollowUser(userId: string) {
+  try {
+    const { data, status } = await serverClient.post(`/users/${userId}/follow/`)
+    if (status === STATUS.HTTP_201_CREATED || status === STATUS.HTTP_200_SUCCESSFUL) {
+      return data as { detail: string }
+    } else {
+      return data as { detail: string }
+    }
+  } catch (error) {
+    console.error(error)
+  }
 }

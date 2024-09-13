@@ -22,10 +22,14 @@ import { toast } from 'sonner'
 import { useRouter } from 'next/navigation'
 import { CompleteProfileSchema } from '@/lib/schema/auth'
 import Dropzone from '../create/dropzone'
-import { Label } from '../ui/label'
 import Image from 'next/image'
+import { User } from '@/types/db'
 
-const CompleteProfile = () => {
+interface Props {
+  user: User
+}
+
+const CompleteProfile = ({ user }: Props) => {
 
   const { mutate: updateUser, isPending } = useUpdateUser()
   const router = useRouter()
@@ -34,13 +38,17 @@ const CompleteProfile = () => {
   const form = useForm<z.infer<typeof CompleteProfileSchema>>({
     resolver: zodResolver(CompleteProfileSchema),
     defaultValues: {
-      first_name: "",
-      last_name: "",
-      avatar: imageURL
+      first_name: user.first_name || "",
+      last_name: user.last_name || "",
+      avatar: user.avatar || imageURL
     },
   })
  
   function onSubmit(values: z.infer<typeof CompleteProfileSchema>) {
+    if (!imageURL) {
+      form.setError('avatar', { message: 'Profile Picture cannot be empty!'})
+    }
+
     updateUser({...values, avatar: imageURL}, {
       onSuccess: () => {
         form.reset()
@@ -56,23 +64,34 @@ const CompleteProfile = () => {
   return (
     <Card className='flex flex-col gap-y-4 rounded-xl p-4 py-5 w-full bg-secondary/95 md:bg-inherit md:w-[440px] border-none shadow-none drop-shadow-none'>
       <h2 className='text-3xl font-bold'>Culinara</h2>
-      <p className='text-muted-foreground'>Welcome to Culinara, please complete your profile to continue, this is the final step.</p>
+      <p className='text-muted-foreground'>Hi <span className="text-primary font-semibold">{user.username}</span>, Welcome to Culinara, please complete your profile to continue, this is the final step.</p>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 w-full ">
-          <div className='flex items-center justify-center flex-col gap-y-3'>
-            <Label>Choose Profile Image</Label>
-            {
-              imageURL ? (
-                <div>
-                  <Image src={imageURL} width={150} height={150} alt='profile-image' className='object-cover w-32 h-32 rounded-full border' />
-                </div>
-              ) :
-              <Dropzone 
-                onUploadFinish={(url) => setImageURL(url ?? '')}
-                endpoint='profile'
-              />
-            }
-          </div>
+          <FormField
+            control={form.control}
+            name="avatar"
+            render={({}) => (
+              <FormItem>
+                <FormLabel>Choose Profile Image</FormLabel>
+                <FormControl>
+                  <div className='flex items-center justify-center flex-col gap-y-3'>
+                    {
+                      imageURL ? (
+                        <div>
+                          <Image src={imageURL} width={150} height={150} alt='profile-image' className='object-cover w-32 h-32 rounded-full border' />
+                        </div>
+                      ) :
+                      <Dropzone 
+                        onUploadFinish={(url) => setImageURL(url ?? '')}
+                        endpoint='profile'
+                      />
+                    }
+                  </div>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
           <FormField
             control={form.control}
             name="first_name"

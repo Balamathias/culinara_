@@ -9,7 +9,7 @@ export interface RegisterResponse {
     access_token: string;
     refresh_token: string;
   } | null;
-  errors?: Record<string, string[]>
+  errors?: Record<'email' | 'password' | 'username', string[]> | null
 }
 
 export interface BadRegisterResponse {

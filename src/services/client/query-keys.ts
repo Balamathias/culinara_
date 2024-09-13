@@ -7,5 +7,8 @@ export enum QUERY_KEYS {
   get_infinite_favorite_posts = 'get_infinite_favorite_posts',
   get_infinite_posts_by_tag = 'get_infinite_posts_by_tag',
   get_search = 'get_search',
-  get_infinite_search = 'get_infinite_search'
+  get_infinite_search = 'get_infinite_search',
+  explore_posts = 'explore_posts',
+  follow_unfollow_user = 'follow_unfollow_user',
+  
 }

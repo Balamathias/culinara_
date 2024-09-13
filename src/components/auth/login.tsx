@@ -40,12 +40,17 @@ const Login = () => {
     console.log(values)
     login({...values}, {
       onSuccess: (data) => {
-        if (data) {
-          localStorage.setItem('token', data?.access as string)
-          localStorage.setItem('refreshToken', data?.refresh as string)
+        if (data?.data) {
+          localStorage.setItem('token', data?.data?.access as string)
+          localStorage.setItem('refreshToken', data?.data?.refresh as string)
           form.reset()
           toast.success('Logged In successfully, You will be redirected in a bit.')
           router.replace('/')
+        } else {
+          if (data?.status === 401) {
+            form.setError('email', { message: 'Invalid credentials'})
+            form.setError('password', { message: 'Invalid Credemtials'})
+          }
         }
       },
       onError: (err) => {

@@ -1,19 +1,24 @@
 'use client'
 
 import React from 'react'
-import { useInfiniteFavoritePosts } from '@/services/client/posts';
+import { useInfiniteExplore } from '@/services/client/posts';
 import { User } from '@/types/db';
 import { Loader2 } from 'lucide-react';
 import useInfiniteScroll from '../hooks/use-infinite-scroll';
 import PostsSkeleton from '../skeletons/posts';
 import Post from '../post';
 import Empty from '../empty';
+import { useSearchParams } from 'next/navigation';
 
 interface Props {
   user: User
 }
 
-const Favorites = ({ user }: Props) => {
+const Explore = ({ user }: Props) => {
+
+  const params = useSearchParams()
+  const tab = params.get('tab') ?? 'all'
+
   const {
     data,
     fetchNextPage,
@@ -21,11 +26,12 @@ const Favorites = ({ user }: Props) => {
     isFetchingNextPage,
     isPending,
     error
-  } = useInfiniteFavoritePosts()
+  } = useInfiniteExplore(tab)
 
   useInfiniteScroll({ fetchNextPage, hasNextPage })
 
   if (isPending) return <PostsSkeleton />
+
   if (error) return <div className='p-4 rounded-xl text-red-500 bg-red-500/15'>Error loading posts...</div>
 
   return (
@@ -38,8 +44,8 @@ const Favorites = ({ user }: Props) => {
                 <Post post={post} key={post.id} user={user} />
               )) : (
                 <Empty 
-                  title="No Favorites"
-                  description="You do not have any recipe in your favorites yet, Add recipes to favorites to be able to access them here."
+                  title="No Posts could be found"
+                  description={`Sorry, we could not find any post in the "${tab}" tab, but do not fret!`}
                 />
               )
             }
@@ -56,4 +62,4 @@ const Favorites = ({ user }: Props) => {
   )
 }
 
-export default Favorites
+export default Explore

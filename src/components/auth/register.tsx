@@ -41,12 +41,23 @@ const Register = () => {
     console.log(values)
     register({...values}, {
       onSuccess: (data) => {
-        if (data) {
+        if (data?.data && data?.code === 201) {
           localStorage.setItem('token', data?.data?.access_token as string)
           localStorage.setItem('refreshToken', data?.data?.refresh_token as string)
           form.reset()
           toast.success('Account created successfully, You will be redirected in a bit.')
           router.replace('/profile-complete')
+        } else {
+          const errors = data?.errors
+          if (errors) {
+            // @ts-expect-error: Not really an error. TS just gone nuts!
+            Object.keys(errors).forEach((key: keyof typeof errors) => {
+              form.setError(key, {
+                type: 'server',
+                message: errors[key][0]
+              })
+            })
+          }
         }
       },
       onError: (err) => {

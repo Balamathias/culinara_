@@ -1,5 +1,5 @@
 import { useMutation } from "@tanstack/react-query";
-import { login, logout, register, updateUser } from "../auth";
+import { followUnfollowUser, login, logout, register, updateUser } from "../auth";
 import { PartialUserUpdate } from "@/types/db";
 import { QUERY_KEYS } from "./query-keys";
 
@@ -21,4 +21,9 @@ export const useLogout = () => useMutation({
 export const useUpdateUser = () => useMutation({
   mutationFn: (data: PartialUserUpdate) => updateUser(data),
   mutationKey: [QUERY_KEYS.update_user]
+})
+
+export const useFollowUnfollowUser = () => useMutation({
+  mutationFn: async ({ userId }: { userId: string }) => followUnfollowUser(userId),
+  mutationKey: [QUERY_KEYS.follow_unfollow_user]
 })

@@ -8,6 +8,8 @@ export interface User {
   is_staff?: boolean,
   is_superuser?: boolean,
   avatar: string | null,
+  followers: string[]
+  following: string[]
 }
 
 export interface Thumbnail { image?: string | null, images?: string[] | null }

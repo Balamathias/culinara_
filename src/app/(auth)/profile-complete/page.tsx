@@ -15,7 +15,7 @@ export default async function Page() {
 
   return (
     <div className='mx-auto max-w-7xl flex flex-col items-center w-full px-4'>
-      <CompleteProfile />
+      <CompleteProfile user={user} />
     </div>
   )
 }

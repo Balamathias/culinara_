@@ -1,6 +1,6 @@
 import { useMutation, QueryClient, useInfiniteQuery, useQuery } from "@tanstack/react-query";
 import { QUERY_KEYS } from "./query-keys";
-import { createPost, filterPostsByTag, getFavoriteRecipes, getPosts, likePost, searchPosts } from "../posts";
+import { createPost, explorePosts, filterPostsByTag, getFavoriteRecipes, getPosts, likePost, searchPosts } from "../posts";
 import { InsertPost } from "@/types/db";
 
 const queryClient = new QueryClient()
@@ -19,7 +19,7 @@ export const useLikePost = () => useMutation({
   }
 })
 
-// @ts-ignore
+// @ts-expect-error: Ignore
 export const useInfinitePosts = () => useInfiniteQuery({
   queryKey: [QUERY_KEYS.get_infinite_posts],
   queryFn: async ({ pageParam = 1 }: { pageParam: number }) => {
@@ -40,7 +40,7 @@ export const useInfinitePosts = () => useInfiniteQuery({
   },
 })
 
-// @ts-ignore
+// @ts-expect-error: Ignore
 export const useInfinitePostsByTags = (tag: string) => useInfiniteQuery({
   queryKey: [QUERY_KEYS.get_infinite_posts_by_tag, tag],
   queryFn: async ({ pageParam = 1 }: { pageParam: number }) => {
@@ -61,7 +61,7 @@ export const useInfinitePostsByTags = (tag: string) => useInfiniteQuery({
   },
 })
 
-// @ts-ignore
+// @ts-expect-error: Ignore
 export const useInfiniteFavoritePosts = () => useInfiniteQuery({
   queryKey: [QUERY_KEYS.get_infinite_favorite_posts],
   queryFn: async ({ pageParam = 1 }: { pageParam: number }) => {
@@ -87,11 +87,32 @@ export const useSearch = (q: string) => useQuery({
   queryKey: [QUERY_KEYS.get_search, q]
 })
 
-// @ts-ignore
+// @ts-expect-error: TS just being a bad guy...
 export const useInfiniteSearch = (q: string) => useInfiniteQuery({
-  queryKey: [QUERY_KEYS.get_infinite_search],
+  queryKey: [QUERY_KEYS.get_infinite_search, q],
   queryFn: async ({ pageParam = 1 }: { pageParam: number }) => {
     const posts = await searchPosts(q, pageParam)
+    return posts!
+  },
+  getNextPageParam: (lastPage) => {
+    if (lastPage?.next) {
+      const url = new URL(lastPage.next);
+      const nextPage = url.searchParams.get("page");
+      return nextPage ? parseInt(nextPage) : undefined;
+    }
+    return undefined
+  },
+  initialData: {
+    pages: [],
+    pageParams: [],
+  },
+})
+
+// @ts-expect-error: TS just being a bad guy...
+export const useInfiniteExplore = (tab: string) => useInfiniteQuery({
+  queryKey: [QUERY_KEYS.explore_posts, tab],
+  queryFn: async ({ pageParam = 1 }: { pageParam: number }) => {
+    const posts = await explorePosts(tab, pageParam)
     return posts!
   },
   getNextPageParam: (lastPage) => {

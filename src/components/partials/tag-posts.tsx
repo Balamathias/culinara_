@@ -7,6 +7,7 @@ import { Loader2 } from 'lucide-react';
 import useInfiniteScroll from '../hooks/use-infinite-scroll';
 import PostsSkeleton from '../skeletons/posts';
 import Post from '../post';
+import Empty from '../empty';
 
 interface Props {
   user: User,
@@ -34,9 +35,14 @@ const TagPosts = ({ user, tag }: Props) => {
         data?.pages.map((page, i) => (
           <React.Fragment key={i}>
             {
-              page?.results.map(post => (
+              page?.results ? page?.results.map(post => (
                 <Post post={post} key={post.id} user={user} />
-              ))
+              )): (
+                <Empty 
+                  title={`No post found for #${tag}`}
+                  description={`Sorry, we could not find any post for #${tag}, please try another one.`}
+                />
+              )
             }
           </React.Fragment>
         ))

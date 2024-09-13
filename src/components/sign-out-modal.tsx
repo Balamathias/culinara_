@@ -34,12 +34,14 @@ const SignOutModal = ({}: Props) => {
       <DialogContent className='flex flex-col gap-y-4 p-6 max-sm:max-w-[320px] bg-card dark:bg-stone-900 rounded-lg border-none shadow-none drop-shadow-none'>
         <h1 className='text-2xl font-semibold'>Sign out</h1>
         <p className='text-lg'>Are you sure you want to sign out?</p>
-        <div className='flex gap-x-4'>
+        <div className='flex gap-x-4 justify-between'>
           <Button variant='secondary' className='rounded-lg' onClick={() => setOpen(false)}>Cancel</Button>
-          <Button variant='destructive' className='rounded-lg' onClick={() => {
+          <Button variant='destructive' className='rounded-lg float-right' onClick={() => {
             logout(undefined, {
               onSuccess: () => {
                 setOpen(false)
+                localStorage.removeItem('token')
+                localStorage.removeItem('refreshToken')
                 toast.success('Signed out successfully')
                 router.replace('/login')
               },
