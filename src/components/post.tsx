@@ -13,7 +13,7 @@ interface Props {
 const Post = ({post, user}: Props) => {
   return (
     <div className="rounded-xl w-full md:max-w-[500px] md:basis-2/3 flex flex-col gap-y-3 bg-background border-none shadow-none hover:opacity-90 hover:transition-all">
-      <PostAuthor author={post.author} post={post} />
+      <PostAuthor author={post.author} post={post} currentUser={user} />
       <Image
         src={post?.thumbnail?.image ?? ''}
         alt={post.title}

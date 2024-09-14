@@ -11,8 +11,8 @@ interface PostActionsProps {
   user: User | null
 }
 
-const PostActions = ({post, user}: PostActionsProps) => {
-  const [following, setFollowing] = useState(post?.likes ?? [])
+const FollowButton = ({post, user}: PostActionsProps) => {
+  const [following, setFollowing] = useState(user?.following ?? [])
   const hasFollowed = following?.includes(user?.id ?? '')
   const { mutate: followUnfollow } = useFollowUnfollowUser()
 
@@ -40,4 +40,4 @@ const PostActions = ({post, user}: PostActionsProps) => {
   )
 }
 
-export default PostActions
+export default FollowButton

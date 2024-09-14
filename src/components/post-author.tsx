@@ -6,15 +6,17 @@ import { Avatar, AvatarImage } from './ui/avatar'
 import { AvatarFallback } from '@radix-ui/react-avatar'
 import Link from 'next/link'
 import { timeAgo } from '@/lib/utils'
+import FollowButton from './follow-button'
 
 interface PostAuthorProps {
   author: User | null,
-  post: Post
+  post: Post,
+  currentUser: User | null
 }
 
-const PostAuthor = ({ author, post }: PostAuthorProps) => {
+const PostAuthor = ({ author, post, currentUser }: PostAuthorProps) => {
   return (
-    <div className='flex-row gap-y-4 flex z-10 gap-x-1.5'>
+    <div className='flex-row gap-y-4 flex z-10 gap-x-1.5 justify-between items-center'>
       <Link href={`/profile/${author?.username}`} className='flex items-center gap-x-2.5'>
         <Avatar className='border-health'>
           <AvatarImage src={author?.avatar ?? ''} className='object-cover' />
@@ -28,6 +30,9 @@ const PostAuthor = ({ author, post }: PostAuthorProps) => {
           <p className='text-muted-foreground text-sm'>{author?.first_name} {author?.last_name}</p>
         </div>
       </Link>
+      <div>
+        <FollowButton user={currentUser} post={post} />
+      </div>
     </div>
   )
 }

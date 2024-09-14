@@ -110,10 +110,15 @@ export const mobileLinks = [
     href: '#',
     temp_href: '/search',
   },
+  // {
+  //   label: 'Profile',
+  //   Icon: UserCircle,
+  //   href: '/profile'
+  // },
   {
-    label: 'Profile',
-    Icon: UserCircle,
-    href: '/profile'
+    label: 'Explore',
+    Icon: Compass,
+    href: '/explore'
   },
 ]
 
