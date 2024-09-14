@@ -45,8 +45,8 @@ const Register = () => {
           localStorage.setItem('token', data?.data?.access_token as string)
           localStorage.setItem('refreshToken', data?.data?.refresh_token as string)
           form.reset()
-          toast.success('Account created successfully, You will be redirected in a bit.')
-          router.replace('/profile-complete')
+          toast.success('Account created successfully, A verification code has been sent to your email.')
+          router.replace('/verify-email?email=' + values?.email)
         } else {
           const errors = data?.errors
           if (errors) {

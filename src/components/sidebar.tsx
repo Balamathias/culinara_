@@ -11,7 +11,7 @@ import Processes from './create/processes'
 import SearchModal from './search/search-modal'
 import SignOutModal from './sign-out-modal'
 
-const lora = Lora({
+export const lora = Lora({
   variable: "--font-lora",
   weight: ['400'],
   subsets: ['latin'],

@@ -1,5 +1,5 @@
 import { useMutation } from "@tanstack/react-query";
-import { followUnfollowUser, login, logout, register, updateUser } from "../auth";
+import { followUnfollowUser, login, logout, register, updateUser, verifyOTP, resendOTP } from "../auth";
 import { PartialUserUpdate } from "@/types/db";
 import { QUERY_KEYS } from "./query-keys";
 
@@ -26,4 +26,14 @@ export const useUpdateUser = () => useMutation({
 export const useFollowUnfollowUser = () => useMutation({
   mutationFn: async ({ userId }: { userId: string }) => followUnfollowUser(userId),
   mutationKey: [QUERY_KEYS.follow_unfollow_user]
+})
+
+export const useVerifyOTP = () => useMutation({
+  mutationKey: ['verify-otp'],
+  mutationFn: ({email, otp}: { email: string, otp: string}) => verifyOTP(email, otp)
+})
+
+export const useResendOTP = () => useMutation({
+  mutationKey: ['resend-otp'],
+  mutationFn: ({email}: { email: string }) => resendOTP(email)
 })

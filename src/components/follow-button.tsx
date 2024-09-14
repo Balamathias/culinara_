@@ -12,8 +12,8 @@ interface PostActionsProps {
 }
 
 const FollowButton = ({post, user}: PostActionsProps) => {
-  const [following, setFollowing] = useState(user?.following ?? [])
-  const hasFollowed = following?.includes(user?.id ?? '')
+  const [followers, setFollowers] = useState(post?.author?.followers ?? [])
+  const hasFollowed = followers?.includes(user?.id ?? '')
   const { mutate: followUnfollow } = useFollowUnfollowUser()
 
   if (post?.author?.id === user?.id) return
@@ -27,10 +27,10 @@ const FollowButton = ({post, user}: PostActionsProps) => {
       )}
       onClick={() => {
         if (hasFollowed) {
-          setFollowing(prev => prev.filter(id => id !== user?.id))
+          setFollowers(prev => prev.filter(id => id !== user?.id))
           followUnfollow({ userId: post?.author?.id ?? '' })
         } else {
-          setFollowing(prev => [...prev, user?.id ?? ''])
+          setFollowers(prev => [...prev, user?.id ?? ''])
           followUnfollow({ userId: post?.author?.id ?? '' })
         }
       }}

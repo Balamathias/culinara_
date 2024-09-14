@@ -1,4 +1,5 @@
 import Explore from "@/components/explore/explore";
+import StickyTabs from "@/components/explore/sticky-tabs";
 import ExploreTabs from "@/components/explore/tabs";
 import PostsSkeleton from "@/components/skeletons/posts";
 import { getUser } from "@/services/auth";
@@ -15,10 +16,13 @@ export default async function Page() {
   return (
     <div className="flex md:p-8 py-6 mx-auto gap-y-3 max-w-7xl w-full gap-x-10 relative">
       <div className="flex flex-col gap-y-4 md:basis-2/3">
+        
         <h2 className="text-2xl md:text-4xl font-semibold py-4 text-muted-foreground flex items-center gap-x-2">
-          <LucideCompass size={32} className="mt-1" />
+          <LucideCompass size={32} className="mt-1 hidden" />
           <span>Explore</span>
         </h2>
+        
+        <StickyTabs />
         <Suspense fallback={<PostsSkeleton />}>
           <Explore user={user!} />
         </Suspense>

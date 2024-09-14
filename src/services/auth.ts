@@ -2,7 +2,7 @@
 'use server'
 
 import serverClient from "@/lib/server"
-import { LoginResponse, RefreshResponse, RegisterResponse } from "@/types/auth"
+import { LoginResponse, OTPResponse, RefreshResponse, RegisterResponse, ResendOTPResponse } from "@/types/auth"
 import { PartialUserUpdate, User } from "@/types/db"
 import { cookies } from "next/headers"
 import { status as STATUS } from "@/lib/utils"
@@ -100,7 +100,10 @@ export async function register({email, password, username}: { email: string; pas
 
   } catch (error: any) {
     console.error(error)
-    throw new Error("An unknown error has occurred. Please ensure the details you entered are correct.")
+    if (error?.status === STATUS.HTTP_500_INTERNAL_SERVER_ERROR) {
+      throw new Error("An internal server error has occurred.")
+    }
+    else throw new Error("An unknown error has occurred. Please try again.")
   }
 }
 
@@ -126,3 +129,52 @@ export async function followUnfollowUser(userId: string) {
     console.error(error)
   }
 }
+
+export async function verifyOTP(email: string, otp: string) {
+  try {
+    const { data, status } = await serverClient.post(`/auth/verify-otp/`, {email, otp})
+
+    if (status === STATUS.HTTP_200_SUCCESSFUL) {
+      cookies().set("token", data?.access_token)
+      cookies().set("refreshToken", data?.refresh_token)
+
+      return { data: data as OTPResponse, status }
+    }
+
+  } catch (err: any) {
+    console.error(err)
+
+    if (err?.status === STATUS.HTTP_400_BAD_REQUEST) {
+      return { data: err?.response?.data as OTPResponse, status: err?.status }
+    }
+
+    if (err?.status === STATUS.HTTP_404_NOT_FOUND) {
+      return { data: err?.response?.data as OTPResponse, status: err?.status }
+    }
+  }
+}
+
+export async function resendOTP(email: string) {
+  try {
+    const { data, status } = await serverClient.post(`/auth/resend-otp/`, {email})
+
+    console.log(data)
+
+    if (status === STATUS.HTTP_200_SUCCESSFUL) {
+
+      return { data: data as ResendOTPResponse, status }
+    }
+
+  } catch (err: any) {
+    console.error(err)
+
+    if (err?.status === STATUS.HTTP_400_BAD_REQUEST) {
+      return { data: err?.response?.data as ResendOTPResponse, status: err?.status }
+    }
+
+    if (err?.status === STATUS.HTTP_404_NOT_FOUND) {
+      return { data: err?.response?.data as ResendOTPResponse, status: err?.status }
+    }
+  }
+}
+

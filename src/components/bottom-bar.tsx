@@ -16,7 +16,7 @@ const BottomBar = () => {
   const [openSearchModal, setOpenSearchModal] = useState(false)
 
   return (
-    <nav className='md:hidden flex fixed w-full bottom-0 h-20 border-t p-4 bg-card backdrop-blur-md z-20'>
+    <nav className='md:hidden flex fixed w-full bottom-0 h-16 border-t p-4 bg-background/90 backdrop-blur-lg z-20'>
       <div className='flex gap-x-4 items-center justify-between w-full'>
         {
           mobilelinks.map(link => (
@@ -35,7 +35,6 @@ const BottomBar = () => {
               }}
             >
               {<link.Icon className={cn('peer', pathname === (link?.temp_href || link?.href) && 'text-wealth')} size={28}/>}
-              <span className='absolute hidden text-sm font-semibold py-1 px-2 rounded xl:peer-hover:hidden peer-hover:block bg-secondary -right-16'>{link.label}</span>
               <span className='font-semibold text-base hidden sm:block'>
                 {link.label}
               </span> 

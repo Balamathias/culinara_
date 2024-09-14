@@ -1,23 +1,56 @@
+'use client'
+
+import React, { useState } from 'react'
+import { motion, useMotionValueEvent, useScroll } from 'framer-motion'
+import { cn } from '@/lib/utils'
+import { lora } from './sidebar'
+import Link from 'next/link'
+import { LucideChefHat } from 'lucide-react'
+import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar'
 import { User } from '@/types/db'
-import React from 'react'
 
 interface NavbarProps {
-  user: User | null
+  user: User
 }
 
 const Navbar = ({ user }: NavbarProps) => {
-  return (
-    <nav className='w-full h-20 fixed top-0 flex items-center justify-center bg-background z-20'>
-      <div className='flex items-center justify-between w-full max-w7xl px-4'>
-        <h2 className='text-2xl font-semibold'>Culinara</h2>
 
-        <div className='flex items-center gap-x-4'>
-          {
-            user && (<h3 className='text-lg'>Hi, <span className="text-sky-500">{user.username}</span>.</h3>)
-          }
+  const [hidden, setHidden] = useState(false)
+  const { scrollY } = useScroll()
+
+  useMotionValueEvent(scrollY, 'change', latest => {
+    const prevValue = scrollY.getPrevious()
+
+    if (latest > prevValue! && latest > 150) {
+        setHidden(true)
+    } else {
+        setHidden(false)
+    }
+  })
+
+  return (
+    <motion.nav
+        initial={{ background: 'inherit' }}
+        transition={{ duration: 0.4, ease: 'easeInOut' }}
+        animate={hidden ? "hidden" : "visible"}
+        variants={{
+            visible: { y: 0 },
+            hidden: { y: '-100%' }
+        }}
+        className="flex flex-row p-4 h-14 w-full fixed top-0 z-30 border-b bg-background md:hidden backdrop-blur-md"
+    >
+        <div className="flex flex-row justify-between items-center w-full mx-auto gap-4 bg-background">
+          <Link href={'/'} className={cn('text-xl font-lora font-bold flex items-center gap-x-1.5', lora.className)}>
+            <LucideChefHat size={32} className='hidden' />
+            <span className=''>Culinara</span>
+          </Link>
+
+          <Avatar>
+            <AvatarImage src={user?.avatar ?? ''} className="object-cover" alt={user?.username} />
+            <AvatarFallback content={user?.username} />
+          </Avatar>
         </div>
-      </div>
-    </nav>
+    </motion.nav>
   )
 }
 
