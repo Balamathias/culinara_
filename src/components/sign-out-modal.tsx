@@ -23,7 +23,7 @@ const SignOutModal = ({}: Props) => {
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild className='flex flex-col gap-y-3 justify-end mt-auto'>
         <span>
-          <Button variant={'destructive'} className='w-full xl:block hidden'>
+          <Button variant={'secondary'} className='w-full xl:block hidden rounded-full'>
             Sign out
           </Button>
           <Button variant={'destructive'} size={'icon'} className='xl:hidden block'>
