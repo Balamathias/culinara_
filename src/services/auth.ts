@@ -103,6 +103,11 @@ export async function register({email, password, username}: { email: string; pas
     if (error?.status === STATUS.HTTP_500_INTERNAL_SERVER_ERROR) {
       throw new Error("An internal server error has occurred.")
     }
+    else if (error?.status === STATUS.HTTP_400_BAD_REQUEST) {
+      console.log(JSON.stringify(error?.response?.data, null, 2))
+      return error?.response?.data as RegisterResponse 
+    }
+
     else throw new Error("An unknown error has occurred. Please try again.")
   }
 }

@@ -31,12 +31,12 @@ const SignOutModal = ({}: Props) => {
           </Button>
         </span>
       </DialogTrigger>
-      <DialogContent className='flex flex-col gap-y-4 p-6 max-sm:max-w-[320px] bg-card dark:bg-stone-900 rounded-lg border-none shadow-none drop-shadow-none'>
+      <DialogContent className='flex flex-col gap-y-4 p-6 max-sm:max-w-[320px] bg-card bg-gradient-to-t dark:from-stone-900 dark:to-stone-950 rounded-lg border-none shadow-none drop-shadow-none'>
         <h1 className='text-2xl font-semibold'>Sign out</h1>
         <p className='text-lg'>Are you sure you want to sign out?</p>
         <div className='flex gap-x-4 justify-between'>
-          <Button variant='secondary' className='rounded-lg' onClick={() => setOpen(false)}>Cancel</Button>
-          <Button variant='destructive' className='rounded-lg float-right' onClick={() => {
+          <Button variant='secondary' className='rounded-full' onClick={() => setOpen(false)}>Cancel</Button>
+          <Button variant='destructive' className='rounded-full float-right' onClick={() => {
             logout(undefined, {
               onSuccess: () => {
                 setOpen(false)

@@ -47,6 +47,7 @@ const CompleteProfile = ({ user }: Props) => {
   function onSubmit(values: z.infer<typeof CompleteProfileSchema>) {
     if (!imageURL) {
       form.setError('avatar', { message: 'Profile Picture cannot be empty!'})
+      return
     }
 
     updateUser({...values, avatar: imageURL}, {

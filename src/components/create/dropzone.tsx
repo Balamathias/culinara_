@@ -15,7 +15,7 @@ const Dropzone = ({onUploadFinish, endpoint}: DropzoneProps) => (
       onUploadFinish(res.at(0)?.url)
     }}
     onUploadError={(error: Error) => {
-      console.error(`ERROR! ${error.message}`);
+      console.error(`ERROR! ${error}`);
       toast.error('An error occured, please try again.')
     }}
     onUploadBegin={() => {
