@@ -25,7 +25,7 @@ const Posts = ({ user }: Props) => {
   useInfiniteScroll({ fetchNextPage, hasNextPage })
 
   if (isPending) return <PostsSkeleton />
-  if (error) return <div className='p-4 rounded-xl text-red-500 bg-red-500/15'>Error loading posts...</div>
+  if (error) return <div className='p-4 rounded-xl text-red-500 bg-red-500/15 w-full flex items-center justify-center'>Error loading posts...</div>
 
   return (
     <div className='flex flex-col gap-y-6 max-sm:mb-20'>
