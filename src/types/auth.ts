@@ -31,3 +31,5 @@ export interface RefreshResponse {
 export interface OTPResponse { message: string | null, access_token: string | null, refresh_token: string | null, error: string | null}
 
 export interface ResendOTPResponse { message: string | null, error: string | null }
+
+export interface ResetPasswordResponse { message: string | null, error: string | null }

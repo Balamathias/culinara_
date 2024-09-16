@@ -26,11 +26,11 @@ import { useQueryClient } from '@tanstack/react-query'
 import { QUERY_KEYS } from '@/services/client/query-keys'
 
 interface FormProps {
-  imageURL: string,
+  fileData: { url?: string, type: string } | null,
   closeModal?: () => void
 }
 
-const CreateForm = ({imageURL, closeModal}: FormProps) => {
+const CreateForm = ({fileData, closeModal}: FormProps) => {
   const { mutate: createPost, isPending } = useCreatePost()
   const router = useRouter()
   const queryClient = useQueryClient()
@@ -49,7 +49,8 @@ const CreateForm = ({imageURL, closeModal}: FormProps) => {
     const data = {
       ...values, 
       tags: values?.tags?.split(',').map(every => every.trim().toLowerCase()), 
-      thumbnail: { image: imageURL }
+      video: fileData?.type === 'video' ? fileData?.url : null,
+      thumbnail: { image: fileData?.type === 'image' ? fileData?.url : null }
     }
     createPost(data, {
       onSuccess: () => {

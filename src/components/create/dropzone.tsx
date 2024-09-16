@@ -1,18 +1,24 @@
 'use client'
 
 import { UploadDropzone } from "@/lib/uploadthing";
+import { isImageOrVideo } from "@/lib/utils";
 import { toast } from "sonner";
 
 interface DropzoneProps {
-  onUploadFinish: (url: string | undefined) => void,
-  endpoint?: 'profile'
+  onUploadFinish: (res: { url?: string, type: string } | null) => void,
+  endpoint?: 'profile' | 'upload' | 'video'
 }
 
 const Dropzone = ({onUploadFinish, endpoint}: DropzoneProps) => (
   <UploadDropzone
     endpoint={endpoint ?? "upload"}
     onClientUploadComplete={(res) => {
-      onUploadFinish(res.at(0)?.url)
+      onUploadFinish(
+        {
+          url: res?.at(0)?.url,
+          type: isImageOrVideo(res?.at(0)?.url ?? '')
+        }
+      )
     }}
     onUploadError={(error: Error) => {
       console.error(`ERROR! ${error}`);

@@ -166,3 +166,19 @@ export function timeAgo(dateString: string): string {
     return `${days}d.`;
   }
 }
+
+export function isImageOrVideo(url: string): 'image' | 'video' | 'unknown' {
+  const imageExtensions = ['.jpg', '.jpeg', '.png', '.gif', '.bmp', '.webp', '.svg'];
+  const videoExtensions = ['.mp4', '.avi', '.mov', '.wmv', '.flv', '.webm', '.mkv'];
+
+  const lowercasedUrl = url.toLowerCase();
+
+  // Check if the URL ends with any of the image or video extensions
+  if (imageExtensions.some(ext => lowercasedUrl.endsWith(ext))) {
+    return 'image';
+  } else if (videoExtensions.some(ext => lowercasedUrl.endsWith(ext))) {
+    return 'video';
+  }
+
+  return 'unknown';
+}

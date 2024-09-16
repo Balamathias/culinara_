@@ -98,6 +98,7 @@ const Login = () => {
 
       <div className='flex flex-col gap-y-2 mt-3'>
         <p className='text-muted-foreground'>{"Don't"} have an account? <Link href={'/register'} className='text-primary'>Register.</Link></p>
+        <p className='text-muted-foreground'>Forgotten password? <Link href={('/reset-password')} className='text-primary'>Reset password.</Link></p>
       </div>
     </Card>
   )

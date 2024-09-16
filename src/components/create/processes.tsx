@@ -10,27 +10,36 @@ interface Props {
 }
 
 const Processes = ({ setOpen }: Props) => {
-  const [imageURL, setImageURL] = useState('')
+  const [fileRes, setFileRes] = useState<{url?: string, type: string} | null>(null)
   const [showForm, setShowForm] = useState(false)
 
   return (
     <div className='flex flex-col gap-y-3.5 my-2'>
       <h2 className='font-semibold text-lg text-center'>Create Recipe</h2>
       {
-        imageURL ? (
+        fileRes ? (
           <div className={'flex flex-col gap-y-4'}>
             <div className={cn('flex flex-col gap-y-4 md:flex-row w-full gap-x-4', showForm && '')}>
-              <Image
-                src={imageURL}
-                alt={imageURL}
+              {fileRes?.type === 'image' ? <Image
+                src={fileRes?.url ?? ''}
+                alt={fileRes?.url ?? 'Image'}
                 width={1000}
                 height={1000}
                 className='w-full h-[300px] md:h-[450px] object-cover rounded-lg md:basis-[40%] md:max-w-[500px]'
-              />
+              /> : (
+                <video
+                  src={fileRes?.url}
+                  loop
+                  className={`w-full aspect-square rounded-t object-cover border cursor-pointer h-[300px] md:h-[450px] max-w-[500px] ${''}`}
+                  playsInline
+                  preload="auto"
+                  controls
+                />
+              )}
               {
                 showForm && (
                   <div className="flex flex-col gap-y-2 md:basis-1/2">
-                    <CreateForm imageURL={imageURL} closeModal={() => setOpen?.(false)} />
+                    <CreateForm fileData={fileRes} closeModal={() => setOpen?.(false)} />
                   </div>
                 )
               }
@@ -48,7 +57,7 @@ const Processes = ({ setOpen }: Props) => {
               )
             }
           </div>
-        ) : <Dropzone onUploadFinish={e => setImageURL(e ?? '')} />
+        ) : <Dropzone onUploadFinish={res => setFileRes(res)} />
       }
     </div>
   )
