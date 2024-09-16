@@ -209,7 +209,31 @@ export async function resetPassword(email: string) {
 
 export async function validateToken(uid: string, token: string) {
   try {
-    const { data, status } = await serverClient.post(`/auth/validate-token/${uid}/${token}/`)
+    const { data, status } = await serverClient.post(`/auth/password-reset/validate-token/${uid}/${token}/`)
+
+    if (status === STATUS.HTTP_200_SUCCESSFUL) {
+
+      return { data: data as ResetPasswordResponse, status }
+    }
+
+  } catch (err: any) {
+    console.error(err)
+
+    if (err?.status === STATUS.HTTP_400_BAD_REQUEST) {
+      return { data: err?.response?.data as ResetPasswordResponse, status: err?.status }
+    }
+
+    if (err?.status === STATUS.HTTP_404_NOT_FOUND) {
+      return { data: err?.response?.data as ResetPasswordResponse, status: err?.status }
+    } else {
+      throw new Error('An unknown error has occured.')
+    }
+  }
+}
+
+export async function passwordResetConfirm({ uid, token, password }:{uid: string, token: string, password: string}) {
+  try {
+    const { data, status } = await serverClient.post(`/auth/password-reset/confirm/${uid}/${token}/`, { password })
 
     if (status === STATUS.HTTP_200_SUCCESSFUL) {
 
