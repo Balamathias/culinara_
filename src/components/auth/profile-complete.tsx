@@ -83,7 +83,7 @@ const CompleteProfile = ({ user }: Props) => {
                         </div>
                       ) :
                       <Dropzone 
-                        onUploadFinish={(url) => setImageURL(url ?? '')}
+                        onUploadFinish={(data) => setImageURL(data?.url ?? '')}
                         endpoint='profile'
                       />
                     }

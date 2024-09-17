@@ -1,5 +1,10 @@
 import Register from '@/components/auth/register'
+import { Metadata } from 'next'
 import React from 'react'
+
+export const metadata: Metadata = {
+  title: "Verify Your Email | Culinara"
+}
 
 const Page = () => {
   

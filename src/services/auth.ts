@@ -2,10 +2,10 @@
 'use server'
 
 import serverClient from "@/lib/server"
-import { LoginResponse, OTPResponse, RefreshResponse, RegisterResponse, ResendOTPResponse, ResetPasswordResponse } from "@/types/auth"
+import { LoginResponse, OTPResponse, RefreshResponse, RegisterResponse, ResendOTPResponse, ResetPasswordConfirmResponse, ResetPasswordResponse } from "@/types/auth"
 import { PartialUserUpdate, User } from "@/types/db"
 import { cookies } from "next/headers"
-import { status as STATUS } from "@/lib/utils"
+import { setCookies, status as STATUS } from "@/lib/utils"
 
 export async function getUser() {
   try {
@@ -136,12 +136,12 @@ export async function followUnfollowUser(userId: string) {
 }
 
 export async function verifyOTP(email: string, otp: string) {
+  const cookieStore = cookies()
   try {
     const { data, status } = await serverClient.post(`/auth/verify-otp/`, {email, otp})
 
     if (status === STATUS.HTTP_200_SUCCESSFUL) {
-      cookies().set("token", data?.access_token)
-      cookies().set("refreshToken", data?.refresh_token)
+      setCookies(cookieStore, data?.access_token, data?.refresh_token)
 
       return { data: data as OTPResponse, status }
     }
@@ -232,23 +232,25 @@ export async function validateToken(uid: string, token: string) {
 }
 
 export async function passwordResetConfirm({ uid, token, password }:{uid: string, token: string, password: string}) {
+  const cookieStore = cookies()
   try {
     const { data, status } = await serverClient.post(`/auth/password-reset/confirm/${uid}/${token}/`, { password })
 
     if (status === STATUS.HTTP_200_SUCCESSFUL) {
-
-      return { data: data as ResetPasswordResponse, status }
+      const res = data as ResetPasswordConfirmResponse
+      setCookies(cookieStore, res?.access_token, res?.refresh_token)
+      return { data: res, status }
     }
 
   } catch (err: any) {
     console.error(err)
 
     if (err?.status === STATUS.HTTP_400_BAD_REQUEST) {
-      return { data: err?.response?.data as ResetPasswordResponse, status: err?.status }
+      return { data: err?.response?.data as ResetPasswordConfirmResponse, status: err?.status }
     }
 
     if (err?.status === STATUS.HTTP_404_NOT_FOUND) {
-      return { data: err?.response?.data as ResetPasswordResponse, status: err?.status }
+      return { data: err?.response?.data as ResetPasswordConfirmResponse, status: err?.status }
     } else {
       throw new Error('An unknown error has occured.')
     }

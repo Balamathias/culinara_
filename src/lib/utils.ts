@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { clsx, type ClassValue } from "clsx"
 import { Compass, Heart, Home, PlusCircle, Search, UserCircle } from "lucide-react"
 import { twMerge } from "tailwind-merge"
@@ -173,7 +174,6 @@ export function isImageOrVideo(url: string): 'image' | 'video' | 'unknown' {
 
   const lowercasedUrl = url.toLowerCase();
 
-  // Check if the URL ends with any of the image or video extensions
   if (imageExtensions.some(ext => lowercasedUrl.endsWith(ext))) {
     return 'image';
   } else if (videoExtensions.some(ext => lowercasedUrl.endsWith(ext))) {
@@ -181,4 +181,18 @@ export function isImageOrVideo(url: string): 'image' | 'video' | 'unknown' {
   }
 
   return 'unknown';
+}
+
+export const setToken = (token?: string | null, refreshToken?: string | null) => {
+  if (token && refreshToken) {
+    localStorage.setItem('token', token)
+    localStorage.setItem('refreshToken', refreshToken)
+  }
+}
+
+export const setCookies = (cookies: any, token?: string | null, refreshToken?: string | null) => {
+  if (token && refreshToken) {
+    cookies.set('token', token)
+    cookies.set('refreshToken', refreshToken)
+  }
 }

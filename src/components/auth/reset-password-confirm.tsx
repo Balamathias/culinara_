@@ -19,8 +19,8 @@ import { Input } from "@/components/ui/input"
 import { Card } from '../ui/card'
 import { useResetPasswordConfirm } from '@/services/client/auth'
 import { toast } from 'sonner'
-import { status } from '@/lib/utils'
-import { useParams } from 'next/navigation'
+import { setToken, status } from '@/lib/utils'
+import { useParams, useRouter } from 'next/navigation'
 
 const FormSchema = z.object({
   password: z.string(),
@@ -32,6 +32,8 @@ const ResetPasswordConfirm = () => {
   const params = useParams()
   const uid = params['uid'] as string
   const token = params['token'] as string
+
+  const router = useRouter()
 
   const { mutate: resetPasswordConfirm, isPending } = useResetPasswordConfirm()
 
@@ -54,6 +56,8 @@ const ResetPasswordConfirm = () => {
         if (data?.status === status.HTTP_200_SUCCESSFUL) {
           toast.success(data?.data?.message)
           form.reset()
+          setToken(data?.data?.access_token, data?.data?.refresh_token)
+          router.replace('/')
         } else {
           toast?.error(data?.data?.error)
         }

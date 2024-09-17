@@ -1,5 +1,10 @@
 import ResetPassword from '@/components/auth/reset-password'
+import { Metadata } from 'next'
 import React from 'react'
+
+export const metadata: Metadata = {
+  title: "Reset Password | Culinara"
+}
 
 const Page = async () => {
 

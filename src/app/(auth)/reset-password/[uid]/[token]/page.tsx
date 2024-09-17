@@ -1,7 +1,12 @@
 import ResetPasswordConfirm from '@/components/auth/reset-password-confirm'
 import { validateToken } from '@/services/auth'
+import { Metadata } from 'next'
 import Link from 'next/link'
 import React from 'react'
+
+export const metadata: Metadata = {
+  title: "Verify token | Culinara"
+}
 
 const Page = async ({ params }: { params: { uid: string, token: string }}) => {
 

@@ -49,6 +49,7 @@ const Register = () => {
           router.replace('/verify-email?email=' + values?.email)
         } else {
           const errors = data?.errors
+          toast.info(data?.message)
           if (errors) {
             // @ts-expect-error: Not really an error. TS just gone nuts!
             Object.keys(errors).forEach((key: keyof typeof errors) => {

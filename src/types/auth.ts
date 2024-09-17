@@ -33,3 +33,10 @@ export interface OTPResponse { message: string | null, access_token: string | nu
 export interface ResendOTPResponse { message: string | null, error: string | null }
 
 export interface ResetPasswordResponse { message: string | null, error: string | null }
+
+export interface ResetPasswordConfirmResponse { 
+  message: string | null, 
+  error: string | null, 
+  access_token: string | null, 
+  refresh_token: string | null 
+}

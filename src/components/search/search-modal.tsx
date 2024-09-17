@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import DynamicModal from '../dynamic-modal'
 import { Input } from '../ui/input'
 import { useSearch } from '@/services/client/posts'
-import { Loader2 } from 'lucide-react'
+import { Loader2, LucidePlay } from 'lucide-react'
 import Link from 'next/link'
 import { clipString } from '@/lib/utils'
 import Image from 'next/image'
@@ -53,13 +53,19 @@ const SearchModal = ({open, setOpen}: Props) => {
                       <h2 className="text-lg font-semibold">{ post.title }</h2>
                       <p className="text-sm">{ clipString(post.short_description ?? '', 30) }</p>
                     </div>
-                    <Image 
-                      src={post.thumbnail?.image ?? ''}
-                      alt={post.title}
-                      width={200}
-                      height={200}
-                      className='aspect-square rounded-xl border object-cover w-[100px] h-[70px]'
-                    />
+                    {post?.video ? (
+                      <div className='flex flex-col w-[100px] relative h-[70px] rounded-xl items-center justify-center'>
+                        <LucidePlay />
+                      </div>
+                    ) : (
+                      <Image 
+                        src={post.thumbnail?.image ?? ''}
+                        alt={post.title}
+                        width={200}
+                        height={200}
+                        className='aspect-square rounded-xl border object-cover w-[100px] h-[70px]'
+                      />
+                  )}
                   </Link>
                 ))
               ): (

@@ -1,4 +1,3 @@
-import Create from "@/components/create";
 import { getUser } from "@/services/auth";
 import { Metadata } from "next";
 
@@ -13,7 +12,6 @@ export default async function Page() {
       <div className="flex flex-col gap-y-4">
         <h2 className="text-xl font-semibold">Create Recipe</h2>
 
-        <Create />
       </div>
     </div>
   );

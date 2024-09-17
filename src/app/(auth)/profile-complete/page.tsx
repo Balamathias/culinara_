@@ -1,6 +1,11 @@
 import CompleteProfile from "@/components/auth/profile-complete";
 import { getUser } from "@/services/auth";
+import { Metadata } from "next";
 import { redirect } from "next/navigation";
+
+export const metadata: Metadata = {
+  title: "Complete your profile | Culinara"
+}
 
 export default async function Page() {
   const user = await getUser()
