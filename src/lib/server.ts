@@ -4,8 +4,10 @@ import axios from 'axios';
 import { cookies } from 'next/headers';
 import { NextResponse } from 'next/server';
 
+const API_URL = process.env.NODE_ENV === 'production' ? process.env.NEXT_PUBLIC_API_URL : 'http://localhost:8000';
+
 const serverClient = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_URL!,
+  baseURL: API_URL,
   headers: {
     'Content-Type': 'application/json',
   },
