@@ -13,22 +13,25 @@ interface Props {
 }
 
 const Posts = ({ user }: Props) => {
+
   const {
     data,
     fetchNextPage,
     hasNextPage,
     isFetchingNextPage,
     isPending,
+    isLoading,
     error
   } = useInfinitePosts()
 
   useInfiniteScroll({ fetchNextPage, hasNextPage })
 
-  if (isPending) return <PostsSkeleton />
+  if (isPending || isLoading) return <PostsSkeleton />
+  
   if (error) return <div className='p-4 rounded-xl text-red-500 bg-red-500/15 w-full flex items-center justify-center'>Error loading posts...</div>
 
   if (!data?.pages.length) {
-    return <div className='p-4 rounded-xl w-full flex items-center justify-center'>There is nothing here yet...</div>
+    return <PostsSkeleton />
   }
 
   return (

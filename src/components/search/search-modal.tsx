@@ -25,7 +25,7 @@ const SearchModal = ({open, setOpen}: Props) => {
     <DynamicModal 
       open={open}
       setOpen={setOpen}
-      className='dark:bg-stone-900 bg-card min-h-[300px] overflow-auto'
+      className='dark:bg-stone-900 bg-card md:min-h-[300px] overflow-auto'
       dialogClassName='md:w-[672px]'
     >
       <div className='flex flex-col gap-y-4'>

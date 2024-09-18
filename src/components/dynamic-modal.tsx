@@ -54,7 +54,7 @@ const DynamicModal = ({
           {trigger}
         </DialogTrigger>
         <DialogContent className={cn("rounded-xl border-none drop-shadow-md shadow-md focus:border-none bg-card outline-none focus-within:border-none", className, dialogClassName)}>
-          <div className="flex flex-col gap-3 p-2.5">
+          <div className="flex flex-col gap-3 p-2.5 overflow-auto">
             {children}
           </div>
         </DialogContent>
@@ -68,7 +68,7 @@ const DynamicModal = ({
         { trigger }
       </DrawerTrigger>
       <DrawerContent className={cn('flex flex-col bg-card flex-1 gap-3 border-none focus:border-none p-4 max-sm:pb-8 outline-none', className, drawerClassName)}>
-        <div className="flex flex-col gap-3">
+        <div className="flex flex-col gap-3 overflow-auto">
             {children}
         </div>
         {showCloseButton && <DrawerFooter className="pt-2">

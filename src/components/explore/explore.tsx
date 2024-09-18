@@ -32,6 +32,10 @@ const Explore = ({ user }: Props) => {
 
   if (isPending) return <PostsSkeleton />
 
+  if (!data?.pages.length) {
+    return <PostsSkeleton />
+  }
+
   if (error) return <div className='p-4 rounded-xl text-red-500 bg-red-500/15'>Error loading posts...</div>
 
   return (
