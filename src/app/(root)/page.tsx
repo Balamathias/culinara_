@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 export default async function Home() {
   const user = await getUser()
   return (
-    <div className="flex md:p-8 py-6 mx-auto max-w-7xl w-full justify-between">
+    <div className="flex md:p-8 py-6 mx-auto max-w-7xl gap-5 w-full justify-between">
       <Posts user={user!} />
 
       <Suspense fallback={<HomeActionsSkeleton />}>

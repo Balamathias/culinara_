@@ -27,6 +27,10 @@ const Posts = ({ user }: Props) => {
   if (isPending) return <PostsSkeleton />
   if (error) return <div className='p-4 rounded-xl text-red-500 bg-red-500/15 w-full flex items-center justify-center'>Error loading posts...</div>
 
+  if (!data?.pages.length) {
+    return <div className='p-4 rounded-xl w-full flex items-center justify-center'>There is nothing here yet...</div>
+  }
+
   return (
     <div className='flex flex-col gap-y-6 max-sm:mb-20'>
       {
