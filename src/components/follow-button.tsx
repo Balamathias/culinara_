@@ -1,22 +1,22 @@
 'use client'
 
 import React, { useState } from 'react'
-import { Post, User } from '@/types/db'
+import { User } from '@/types/db'
 import { cn } from '@/lib/utils'
 import { useFollowUnfollowUser } from '@/services/client/auth'
 import { Button } from './ui/button'
 
 interface PostActionsProps {
-  post: Post | null,
+  author: User | null,
   user: User | null
 }
 
-const FollowButton = ({post, user}: PostActionsProps) => {
-  const [followers, setFollowers] = useState(post?.author?.followers ?? [])
+const FollowButton = ({author, user}: PostActionsProps) => {
+  const [followers, setFollowers] = useState(author?.followers ?? [])
   const hasFollowed = followers?.includes(user?.id ?? '')
   const { mutate: followUnfollow } = useFollowUnfollowUser()
 
-  if (post?.author?.id === user?.id) return
+  if (author?.id === user?.id) return
 
   return (
     <Button 
@@ -28,10 +28,10 @@ const FollowButton = ({post, user}: PostActionsProps) => {
       onClick={() => {
         if (hasFollowed) {
           setFollowers(prev => prev.filter(id => id !== user?.id))
-          followUnfollow({ userId: post?.author?.id ?? '' })
+          followUnfollow({ userId: author?.id ?? '' })
         } else {
           setFollowers(prev => [...prev, user?.id ?? ''])
-          followUnfollow({ userId: post?.author?.id ?? '' })
+          followUnfollow({ userId: author?.id ?? '' })
         }
       }}
     >

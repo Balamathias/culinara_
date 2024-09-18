@@ -35,7 +35,7 @@ const Posts = ({ user }: Props) => {
   }
 
   return (
-    <div className='flex flex-col gap-y-6 max-sm:mb-20'>
+    <div className='flex flex-col gap-y-6'>
       {
         data?.pages.map((page, i) => (
           <React.Fragment key={i}>

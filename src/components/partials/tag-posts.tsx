@@ -35,7 +35,7 @@ const TagPosts = ({ user, tag }: Props) => {
   if (error) return <div className='p-4 rounded-xl text-red-500 bg-red-500/15'>Error loading posts...</div>
 
   return (
-    <div className='flex flex-col gap-y-6 max-sm:mb-20'>
+    <div className='flex flex-col gap-y-6'>
       {
         data?.pages.map((page, i) => (
           <React.Fragment key={i}>

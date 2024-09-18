@@ -31,7 +31,7 @@ const PostAuthor = ({ author, post, currentUser }: PostAuthorProps) => {
         </div>
       </Link>
       <div>
-        <FollowButton user={currentUser} post={post} />
+        <FollowButton user={currentUser} author={author} />
       </div>
     </div>
   )
