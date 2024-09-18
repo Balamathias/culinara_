@@ -68,7 +68,7 @@ const Sidebar = () => {
         dismissible={false}
         className='dark:bg-stone-900 min-w-max bg-card overflow-auto'
         dialogClassName='border'
-        drawerClassName='overflow-auto'
+        drawerClassName='overflow-auto px-2'
       >
         <Processes setOpen={setOpenCreate} />
       </DynamicModal>

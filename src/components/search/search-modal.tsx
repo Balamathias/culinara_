@@ -27,7 +27,7 @@ const SearchModal = ({open, setOpen}: Props) => {
       setOpen={setOpen}
       className='dark:bg-stone-900 bg-card md:min-h-[300px]'
       dialogClassName='md:w-[672px]'
-      drawerClassName='px-2'
+      drawerClassName='px-2 min-h-[500px]'
     >
       <div className='flex flex-col gap-y-4'>
         <h2 className='font-semibold text-lg'>Search for recipes</h2>
