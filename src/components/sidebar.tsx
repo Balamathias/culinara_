@@ -66,7 +66,7 @@ const Sidebar = () => {
         open={openCreate}
         setOpen={setOpenCreate}
         dismissible={false}
-        className='dark:bg-stone-900 min-w-max bg-card'
+        className='dark:bg-stone-900 min-w-max bg-card overflow-auto'
         dialogClassName='border'
       >
         <Processes setOpen={setOpenCreate} />

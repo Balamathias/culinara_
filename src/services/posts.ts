@@ -45,7 +45,7 @@ export async function createPost(post: InsertPost) {
     }
   } catch (error: any) {
     console.error(error)
-    throw new Error('An unknown error occurred, please try again.')
+    throw new Error(error)
   }
 }
 

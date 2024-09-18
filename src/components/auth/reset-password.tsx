@@ -53,7 +53,7 @@ const ResetPassword = () => {
   }
 
   return (
-    <Card className='flex flex-col gap-y-4 rounded-xl p-4 py-5 w-full max-md:border md:bg-inherit md:w-[440px] border-none shadow-none drop-shadow-none'>
+    <Card className='flex flex-col gap-y-4 rounded-xl p-4 py-5 w-full max-md:border dark:bg-inherit md:w-[440px] border-none shadow-none drop-shadow-none'>
       <h2 className='text-3xl font-bold'>Reset Password</h2>
       <p className='text-muted-foreground'>Please provide your email address below.</p>
       <Form {...form}>
