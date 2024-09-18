@@ -20,17 +20,11 @@ const Page = async ({ params }: { params: { postId: string }}) => {
       </div>
 
       <div className="flex-col gap-y-5 md:basis-[40%] md:flex py-6">
-        
-        <div className="flex flex-col gap-y-4">
-          <h2 className="text-2xl font-semibold text-muted-foreground">Short description</h2>
-          <p className="text-lg text-muted-foreground">{post.short_description}</p>
-        </div>
-
         <div className='flex flex-col gap-y-4'>
           <h2 className='text-2xl font-semibold text-muted-foreground'>Procedure</h2>
           <div className='flex flex-col gap-y-1 text-muted-foreground'>
             {post.content.split('\n').map((paragraph, index) => (
-              <p key={index} className='text-base md:text-base py-1'>{paragraph}</p>
+              <p key={index} className='text-base md:text-base py-1.5'>{paragraph}</p>
             ))}
           </div>
         </div>
