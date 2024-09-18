@@ -5,7 +5,7 @@ import { Skeleton } from '../ui/skeleton'
 
 const PostsSkeleton = () => {
   return (
-    <div className='flex flex-col gap-y-8'>
+    <div className='flex flex-col gap-y-8 md:w-[500px] w-full'>
       {[0, 2, 3].map(item => (
         <div className='flex flex-col gap-y-2.5' key={item}>
           <div className='flex flex-row items-center gap-x-2'>
@@ -13,8 +13,8 @@ const PostsSkeleton = () => {
             <Skeleton className='w-28 h-4' />
           </div>
 
-          <div className='flex flex-col w-full gap-y-3 md:w-[500px]'>
-            <Skeleton className='w-full rounded-t h-[500px] aspect-square' />
+          <div className='flex flex-col gap-y-3'>
+            <Skeleton className='rounded-t w-full aspect-square' />
 
             <div className='flex flex-row items-center gap-x-2.5'>
               {['tag1', 'tag2', 'tag3', 'tag4'].map(tag => (
@@ -23,8 +23,8 @@ const PostsSkeleton = () => {
             </div>
 
             <div className='flex flex-col gap-y-1.5'>
-              <Skeleton className='h-4 w-full' />
-              <Skeleton className='h-4 w-full' />
+              <Skeleton className='h-4' />
+              <Skeleton className='h-4' />
             </div>
           </div>
         </div>

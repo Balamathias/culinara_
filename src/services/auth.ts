@@ -27,16 +27,6 @@ export async function getProfile(username: string) {
   }
 }
 
-export async function getUserPosts(username: string, page=1) {
-  try {
-    const { data } = await serverClient.get(`/profile/${username}/posts/`, { params: { page } })
-    return data
-  } catch (error: any) {
-    console.error(error)
-    return null
-  }
-}
-
 export async function login(email: string, password: string) {
   try {
     const { data, status } = await serverClient.post("/auth/login/", { email, password })

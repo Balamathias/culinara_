@@ -26,6 +26,16 @@ export async function getTrendingPosts(count=3) {
   }
 }
 
+export async function getUserPosts(username: string, page=1) {
+  try {
+    const { data } = await serverClient.get(`/profile/${username}/posts/`, { params: { page } })
+    return data as PaginatedPosts
+  } catch (error: any) {
+    console.error(error)
+    return null
+  }
+}
+
 export async function getPost(id: string) {
   try {
     const { data } = await serverClient.get(`/posts/${id}/`)

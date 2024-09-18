@@ -25,8 +25,9 @@ const SearchModal = ({open, setOpen}: Props) => {
     <DynamicModal 
       open={open}
       setOpen={setOpen}
-      className='dark:bg-stone-900 bg-card md:min-h-[300px] overflow-auto'
+      className='dark:bg-stone-900 bg-card md:min-h-[300px]'
       dialogClassName='md:w-[672px]'
+      drawerClassName='px-2'
     >
       <div className='flex flex-col gap-y-4'>
         <h2 className='font-semibold text-lg'>Search for recipes</h2>
@@ -44,7 +45,7 @@ const SearchModal = ({open, setOpen}: Props) => {
             <Loader2 className='animate-spin' />
           </div>
         ): (
-          <div className='flex flex-col gap-y-3 overflow-y-auto'>
+          <div className='flex flex-col gap-y-3 md:overflow-y-auto'>
             {
               posts?.results?.length ? (
                 posts?.results?.map(post => (

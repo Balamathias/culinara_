@@ -1,6 +1,6 @@
 import { useMutation, QueryClient, useInfiniteQuery, useQuery } from "@tanstack/react-query";
 import { QUERY_KEYS } from "./query-keys";
-import { createPost, explorePosts, filterPostsByTag, getFavoriteRecipes, getPosts, likePost, searchPosts } from "../posts";
+import { createPost, explorePosts, filterPostsByTag, getFavoriteRecipes, getPosts, getUserPosts, likePost, searchPosts } from "../posts";
 import { InsertPost } from "@/types/db";
 
 const queryClient = new QueryClient()
@@ -83,7 +83,10 @@ export const useInfiniteFavoritePosts = () => useInfiniteQuery({
 })
 
 export const useSearch = (q: string) => useQuery({
-  queryFn: () => searchPosts(q),
+  queryFn: () => { 
+    if (q)
+      return searchPosts(q)
+  },
   queryKey: [QUERY_KEYS.get_search, q]
 })
 
@@ -113,6 +116,27 @@ export const useInfiniteExplore = (tab: string) => useInfiniteQuery({
   queryKey: [QUERY_KEYS.explore_posts, tab],
   queryFn: async ({ pageParam = 1 }: { pageParam: number }) => {
     const posts = await explorePosts(tab, pageParam)
+    return posts!
+  },
+  getNextPageParam: (lastPage) => {
+    if (lastPage?.next) {
+      const url = new URL(lastPage.next);
+      const nextPage = url.searchParams.get("page");
+      return nextPage ? parseInt(nextPage) : undefined;
+    }
+    return undefined
+  },
+  initialData: {
+    pages: [],
+    pageParams: [],
+  },
+})
+
+// @ts-expect-error: TS just being a bad guy...
+export const useInfiniteProfileUserPosts = (username: string) => useInfiniteQuery({
+  queryKey: [QUERY_KEYS.profile_user_posts, username],
+  queryFn: async ({ pageParam = 1 }: { pageParam: number }) => {
+    const posts = await getUserPosts(username, pageParam)
     return posts!
   },
   getNextPageParam: (lastPage) => {

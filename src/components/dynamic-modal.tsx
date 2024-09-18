@@ -54,7 +54,7 @@ const DynamicModal = ({
           {trigger}
         </DialogTrigger>
         <DialogContent className={cn("rounded-xl border-none drop-shadow-md shadow-md focus:border-none bg-card outline-none focus-within:border-none", className, dialogClassName)}>
-          <div className="flex flex-col gap-3 p-2.5 overflow-auto">
+          <div className="flex flex-col gap-3 p-2.5">
             {children}
           </div>
         </DialogContent>

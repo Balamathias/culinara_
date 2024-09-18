@@ -10,5 +10,6 @@ export enum QUERY_KEYS {
   get_infinite_search = 'get_infinite_search',
   explore_posts = 'explore_posts',
   follow_unfollow_user = 'follow_unfollow_user',
+  profile_user_posts = 'profile_user_posts',
   
 }
