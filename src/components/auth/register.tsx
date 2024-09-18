@@ -68,7 +68,7 @@ const Register = () => {
   }
 
   return (
-    <Card className='flex flex-col gap-y-4 rounded-xl p-4 py-5 w-full bg-secondary/90 md:bg-inherit md:w-[440px] border-none shadow-none drop-shadow-none'>
+    <Card className='flex flex-col gap-y-4 rounded-xl p-4 py-5 w-full max-md:border md:bg-inherit md:w-[440px] border-none shadow-none drop-shadow-none'>
       <h2 className='text-2xl font-bold'>Culinara Register</h2>
       <p className='text-muted-foreground'>Create an account to get started with Culinara</p>
       <Form {...form}>
