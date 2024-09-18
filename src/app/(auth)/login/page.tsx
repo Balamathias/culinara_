@@ -3,7 +3,7 @@ import { Metadata } from 'next'
 import React from 'react'
 
 export const metadata: Metadata = {
-  title: "Verify Your Email | Culinara"
+  title: "Login | Culinara"
 }
 
 const Page = () => {
