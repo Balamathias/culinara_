@@ -15,7 +15,7 @@ const ProfileThumb = async ({ username }: Props) => {
   return (
     <div className='flex gap-y-4 py-4 flex-col'>
       <div 
-        className=' bg-primary/70 rounded-xl w-full h-48 max-sm:h-36 relative'
+        className=' bg-primary rounded-xl w-full h-48 max-sm:h-36 relative'
       >
         <div className='flex absolute left-0 -bottom-1/4'>
           <Avatar className='w-24 h-24'>
