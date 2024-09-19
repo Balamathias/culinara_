@@ -17,7 +17,7 @@ interface PostAuthorProps {
 const PostAuthor = ({ author, post, currentUser }: PostAuthorProps) => {
   return (
     <div className='flex-row gap-y-4 flex z-10 gap-x-1.5 justify-between items-center'>
-      <Link href={`/profile/${author?.username}`} className='flex items-center gap-x-2.5'>
+      <Link href={`/profile/${author?.username}`} className='flex items-center gap-x-2.5 hover:opacity-70'>
         <Avatar className='border-health'>
           <AvatarImage src={author?.avatar ?? ''} className='object-cover' />
           <AvatarFallback className={'bg-wealth/10 text-wealth'} content={author?.username ?? 'A'} />
