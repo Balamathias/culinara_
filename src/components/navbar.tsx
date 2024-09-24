@@ -45,10 +45,12 @@ const Navbar = ({ user }: NavbarProps) => {
             <span className=''>Culinara</span>
           </Link>
 
-          <Avatar>
-            <AvatarImage src={user?.avatar ?? ''} className="object-cover" alt={user?.username} />
-            <AvatarFallback content={user?.username} />
-          </Avatar>
+          <Link href={`/profile/${user.username}`}>
+            <Avatar>
+              <AvatarImage src={user?.avatar ?? ''} className="object-cover" alt={user?.username} />
+              <AvatarFallback content={user?.username} />
+            </Avatar>
+          </Link>
         </div>
     </motion.nav>
   )
