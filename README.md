@@ -1,36 +1,41 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Culinara
 
-## Getting Started
+Culinara is an ultimate recipe discovery application built to enable food enthusiasts and chefs to easily overcome the hurdles of securing a one-stop-shop for their varying recipe needs.
 
-First, run the development server:
+Here you create an account and you are open to explore and share different recipes of foods across cultures and ethnicisms.
+
+The Culinara project is a project of one - Bala Mathias that combines the powers of TypeScript and Python to build a fully-fledged web application that works for everyone and anywhere.
+
+# Frontend Technologies
+- Typescript (core)
+- React
+- NextJS
+- Tanstack Query
+- Sonner
+- Shadcn UI
+- TailwindCSS
+- zod
+- React Hook Form
+- Framer Motion
+
+## How to run it?
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/balamathias/culinara_.git
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+```bash
+cd culinara_
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+npm install
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+code .
 
-## Learn More
+npm run dev
+```
 
-To learn more about Next.js, take a look at the following resources:
+And that's it! Happy coding!
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Culinara web is visible @ [https://culinara-web-vercel.app](Culinara Web Frontend)
