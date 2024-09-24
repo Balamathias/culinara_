@@ -30,7 +30,7 @@ const PostAuthor = ({ author, post, currentUser }: PostAuthorProps) => {
           <p className='text-muted-foreground text-sm'>{author?.first_name} {author?.last_name}</p>
         </div>
       </Link>
-      <div>
+      <div className=''>
         <FollowButton user={currentUser} author={author} />
       </div>
     </div>

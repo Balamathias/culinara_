@@ -7,6 +7,9 @@ import { PartialUserUpdate, User } from "@/types/db"
 import { cookies } from "next/headers"
 import { setCookies, status as STATUS } from "@/lib/utils"
 
+/**
+ * `await getUser()` - Get the currently logged in user based on the cookie session.
+ */
 export async function getUser() {
   try {
     const { data } = await serverClient.get("/auth/user/")
@@ -17,6 +20,11 @@ export async function getUser() {
   }
 }
 
+/**
+ * 
+ * @param username - User's username which must be unique to every user.
+ * @returns User | null
+ */
 export async function getProfile(username: string) {
   try {
     const { data } = await serverClient.get(`/profile/${username}/`)
@@ -27,6 +35,12 @@ export async function getProfile(username: string) {
   }
 }
 
+/**
+ * 
+ * @param email - user's email
+ * @param password - user's password
+ * @returns 
+ */
 export async function login(email: string, password: string) {
   try {
     const { data, status } = await serverClient.post("/auth/login/", { email, password })
@@ -57,6 +71,10 @@ export async function login(email: string, password: string) {
   }
 }
 
+/**
+ * @description Log a user out - blacklists tokens on the backend.
+ * @returns status response
+ */
 export async function logout() {
   try {
     const { data, status } = await serverClient.post("/auth/logout/", { refresh: cookies().get("refreshToken")?.value })
@@ -73,6 +91,9 @@ export async function logout() {
   }
 }
 
+/**
+ * @description get a user's refreshToken
+ */
 export async function refreshToken() {
 
   try {
@@ -87,6 +108,11 @@ export async function refreshToken() {
   }
 }
 
+/**
+ * @description a function that creates a new account for a user.
+ * @param `email`, `password`, `username`
+ * @returns 
+ */
 export async function register({email, password, username}: { email: string; password: string, username: string }) {
   try {
     const { data, status } = await serverClient.post("/auth/register/", { email, password, username })
@@ -122,6 +148,11 @@ export async function register({email, password, username}: { email: string; pas
   }
 }
 
+/**
+ * @param input - Partially update a user's info including:
+ * `first_name, last_name and avatar`,
+ * @returns 
+ */
 export async function updateUser(input: PartialUserUpdate) {
   const { data, status } = await serverClient.put(`/auth/update-user/`, input)
 
@@ -132,6 +163,12 @@ export async function updateUser(input: PartialUserUpdate) {
   else return { status, data: null }
 }
 
+/**
+ * @description This function works by adding a user to a user_followers array where a user is not already in the array.
+ * Where a user is in the array, a subsequent request to this same endpoint with the same parameters will unfollow a user
+ * @param userId - the user's id to be followed or unfollowed
+ * @returns 
+ */
 export async function followUnfollowUser(userId: string) {
   try {
     const { data, status } = await serverClient.post(`/users/${userId}/follow/`)
@@ -145,6 +182,12 @@ export async function followUnfollowUser(userId: string) {
   }
 }
 
+/**
+ * @description Verify a user's OTP
+ * @param email - the user's email
+ * @param otp - the otp sent to the user's email
+ * @returns 
+ */
 export async function verifyOTP(email: string, otp: string) {
   const cookieStore = cookies()
   try {
@@ -169,6 +212,11 @@ export async function verifyOTP(email: string, otp: string) {
   }
 }
 
+/**
+ * @description Resend an email otp to a user
+ * @param email - a user's valid email, it must be in existence.
+ * @returns 
+ */
 export async function resendOTP(email: string) {
   try {
     const { data, status } = await serverClient.post(`/auth/resend-otp/`, {email})
@@ -193,6 +241,11 @@ export async function resendOTP(email: string) {
   }
 }
 
+/**
+ * @description A function that resets a user's password based on his email.
+ * @param email - The user's email
+ * @returns 
+ */
 export async function resetPassword(email: string) {
   try {
     const { data, status } = await serverClient.post(`/auth/password-reset/`, {email})
@@ -217,6 +270,11 @@ export async function resetPassword(email: string) {
   }
 }
 
+/**
+ * @description a function that validates a token and returns a response
+ * @param uid string (A uid string pickable from the urlParams)
+ * @param token string (A valid base-64 encoded token)
+ */
 export async function validateToken(uid: string, token: string) {
   try {
     const { data, status } = await serverClient.post(`/auth/password-reset/validate-token/${uid}/${token}/`)
@@ -241,6 +299,10 @@ export async function validateToken(uid: string, token: string) {
   }
 }
 
+/**
+ * @description A function that simply resets a password after `validateToken()` is successful
+ * @param { uid: string, token: string, password: string } - `password` is the new password field.
+ */
 export async function passwordResetConfirm({ uid, token, password }:{uid: string, token: string, password: string}) {
   const cookieStore = cookies()
   try {
